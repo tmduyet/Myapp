@@ -5,4 +5,8 @@
     <string name="Nav_Cart">Cart</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nav_add">Add</string>
+    <string name="nav_update">Update</string>
+    <string name="admin_delete">Delete</string>
+    <string name="admin_notifi">Thông báo</string>
 </resources>
