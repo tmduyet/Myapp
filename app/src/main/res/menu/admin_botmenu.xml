@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/admin_navadd"
+        android:icon="@drawable/baseline_add_white_24dp"
+        android:title="@string/nav_add" />
+    <item
+        android:id="@+id/admin_update"
+        android:icon="@drawable/baseline_update_white_24dp"
+        android:title="@string/nav_update" />
+    <item
+        android:id="@+id/admin_navdelete"
+        android:icon="@drawable/baseline_delete_white_24dp"
+        android:title="@string/admin_delete" />
+    <item
+        android:id="@+id/admin_noti"
+        android:icon="@drawable/baseline_notifications_none_white_24dp"
+        android:title="@string/admin_notifi" />
+</menu>
