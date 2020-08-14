@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "146287174148",
+    "firebase_url": "https://appbansach-5401a.firebaseio.com",
+    "project_id": "appbansach-5401a",
+    "storage_bucket": "appbansach-5401a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:146287174148:android:63c0195ef2248e5bee8b51",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "146287174148-0vs6tl16lk9r839op3eaqo9lhrk7j4rd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqMo2GdvRGmf5mbTpDtE7kfBAwlS3VABg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "146287174148-0vs6tl16lk9r839op3eaqo9lhrk7j4rd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

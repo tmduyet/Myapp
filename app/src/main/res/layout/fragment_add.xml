@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddFragment">
+        <LinearLayout
+            android:id="@+id/addlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtmasach"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mã sách:"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/editmasach"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Mã sách" />
+
+            <TextView
+                android:id="@+id/txttensach"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:text="Tên sách:"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/edittensach"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Tên sách" />
+
+            <TextView
+                android:id="@+id/txttacgia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:text="Tác giả:"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/edittacgia"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Tác giả" />
+
+            <TextView
+                android:id="@+id/txttheloai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:text="Thể loại:"
+                android:textSize="20dp" />
+            <Spinner
+                android:id="@+id/sptheloai"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                />
+            <TextView
+                android:id="@+id/txtgia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:text="Giá:"
+                android:textSize="20dp" />
+
+
+            <EditText
+                android:id="@+id/editgia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:hint="0"/>
+            <TextView
+                android:id="@+id/txtsl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:text="Số lượng:"
+                android:textSize="20dp" />
+
+
+            <EditText
+                android:id="@+id/editsl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                tools:ignore="DuplicateIds"
+                android:hint="0"/>
+
+            <TextView
+                android:id="@+id/txtmota"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:text="Mô tả:"
+                android:textSize="20dp" />
+
+
+            <EditText
+                android:id="@+id/editmota"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:hint="Mô tả"/>
+            <Button
+                android:id="@+id/btnsave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Save"
+                android:textColor="#000000"
+                android:backgroundTint="#DFDFDF"
+                />
+            <Button
+                android:id="@+id/btnclear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Clear"
+                android:textColor="#000000"
+                android:backgroundTint="#DFDFDF"
+                />
+
+            </LinearLayout>
+
+</ScrollView>
