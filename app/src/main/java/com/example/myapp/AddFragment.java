@@ -3,6 +3,10 @@ package com.example.myapp;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -11,12 +15,34 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.net.URI;
+import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -41,14 +67,37 @@ public class AddFragment extends Fragment {
         // Required empty public constructor
     }
 
+
     private Button btngallery;
+    private Button btnsave;
+    private Button btnclear;
     private ImageView imageView;
+    private EditText edittensach;
+    private EditText edittacgia;
+    private Spinner sptheloai;
+    private EditText editgia;
+    private EditText editsoluong;
+    private EditText editmota;
     private static final int IMAGE_PICK_CODE = 102;
     private static final int PERMISSION_CODE = 103;
+    DatabaseReference fdata;
+    FirebaseStorage fstorage;
+    ArrayList <String> arrayList;
+    ArrayAdapter arrayAdapter = null;
+
     void init(View view)
     {
+        btnsave = (Button) view.findViewById(R.id.btnsave);
+        btnclear = (Button) view.findViewById(R.id.btnclear);
         btngallery = (Button) view.findViewById(R.id.btnchonanh);
         imageView = (ImageView) view.findViewById(R.id.imgsach);
+        edittensach = (EditText) view.findViewById(R.id.edittensach);
+        edittacgia = (EditText) view.findViewById(R.id.edittacgia);
+        sptheloai = (Spinner) view.findViewById(R.id.sptheloai);
+        editgia = (EditText)view.findViewById(R.id.editgia);
+        editsoluong =(EditText) view.findViewById(R.id.editsl);
+        editmota = (EditText)view.findViewById(R.id.editmota);
+
     }
 
 
@@ -73,12 +122,6 @@ public class AddFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-
-
-
 
 
 
@@ -128,8 +171,101 @@ public class AddFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_add, container, false);
-
         init(v);
+        fdata = FirebaseDatabase.getInstance().getReference();
+        fstorage = FirebaseStorage.getInstance();
+        arrayList = new ArrayList<String>();
+        arrayAdapter = new ArrayAdapter(getContext(),android.R.layout.simple_list_item_1, arrayList);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sptheloai.setAdapter(arrayAdapter);
+        fdata.child("Theloai").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                arrayList.add(snapshot.getValue().toString());
+                arrayAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        final StorageReference storageRef = fstorage.getReference();
+        final Sach sach = new Sach();
+        btnsave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Get the data from an ImageView as bytes
+                 final StorageReference mountainsRef = storageRef.child(edittensach.getText().toString());
+                imageView.setDrawingCacheEnabled(true);
+                imageView.buildDrawingCache();
+                Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                byte[] data = baos.toByteArray();
+
+                final UploadTask uploadTask = mountainsRef.putBytes(data);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Toast.makeText(getContext(), "Lỗi upload hình ảnh", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        mountainsRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                sach.setTensach(edittensach.getText().toString());
+                                sach.setTacgia(edittacgia.getText().toString());
+                                sach.setTheloai(sptheloai.getSelectedItem().toString());
+                                sach.setGia(Float.parseFloat(editgia.getText().toString()));
+                                sach.setSoluong(Integer.parseInt(editsoluong.getText().toString()));
+                                sach.setMota(editmota.getText().toString());
+                                sach.setAnh(uri.toString());
+                                fdata.child("Sach").push().setValue(sach);
+                                Toast.makeText(getContext(), "Upload ảnh thành công", Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+                    }
+                });
+
+
+
+
+
+
+            }
+        });
+
+
+        btnclear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageView.setImageBitmap(null);
+                edittensach.setText("");
+                edittacgia .setText("");
+                editgia.setText("");
+                editsoluong.setText("");
+                editmota.setText("");
+            }
+        });
         btngallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
