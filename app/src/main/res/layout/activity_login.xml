@@ -17,7 +17,7 @@
         app:srcCompat="@drawable/logo" />
     <!--Nhap User-->
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editTextUserEmail"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:background="#11000000"
@@ -27,11 +27,11 @@
         android:inputType="textPersonName"
         android:textSize="16dp"
         android:layout_marginBottom="35dp"
-        android:layout_above="@+id/editText2"
+        android:layout_above="@+id/editTextPassword"
         android:layout_centerHorizontal="true" />
     <!--Nhap Password-->
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/editTextPassword"
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:background="#11000000"
@@ -41,8 +41,8 @@
         android:inputType="textPassword"
         android:layout_marginBottom="100dp"
         android:layout_alignBottom="@+id/cardViewLogin"
-        android:layout_alignLeft="@+id/editText"
-        android:layout_alignStart="@+id/editText" />
+        android:layout_alignLeft="@+id/editTextUserEmail"
+        android:layout_alignStart="@+id/editTextUserEmail" />
     <!--CardView Login-->
     <androidx.cardview.widget.CardView
         android:layout_width="300dp"
@@ -101,7 +101,7 @@
         android:textColor="#fff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout"
+        android:layout_alignParentBottom="true"
         android:layout_marginLeft="250dp"
         android:layout_marginBottom="55dp"
         android:text="Forget Password?" />
@@ -110,7 +110,7 @@
         android:id="@+id/textRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout"
+        android:layout_alignParentBottom="true"
         android:layout_marginLeft="50dp"
         android:layout_marginBottom="55dp"
         android:text="Register Here"
@@ -118,7 +118,7 @@
         android:textSize="18dp"
        />
     <!--Image Mang Xa Hoi-->
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:orientation="horizontal"
@@ -146,6 +146,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             app:srcCompat="@drawable/facebook" />
-    </LinearLayout>
+    </LinearLayout>-->
 
 </RelativeLayout>

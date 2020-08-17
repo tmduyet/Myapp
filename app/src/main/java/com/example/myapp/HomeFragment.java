@@ -4,19 +4,30 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Toolbar;
 import android.widget.ViewFlipper;
+import com.example.myapp.Model.SliderItem;
+import com.google.android.material.navigation.NavigationView;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+
+public class HomeFragment extends Fragment{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,8 +37,12 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    // TODO: Rename ViewFlipper
-    ViewFlipper viewFlipper;
+
+    Toolbar toolbar;
+    RecyclerView recyclerView;
+    NavigationView navigationView;
+    ListView listView;
+    //private SliderAdapterHF adapter;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -58,26 +73,18 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        int image[] = {R.drawable.baseline_home_white_24dp, R.drawable.baseline_person_outline_white_24dp, R.drawable.baseline_shopping_cart_white_24dp};
-        viewFlipper = (ViewFlipper) getView().findViewById(R.id.viewflipper);
+        init();
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
-
-    /*public void flipperImages(int image){
-        ImageView imageView = new ImageView(this);
-        imageView.setBackgroundResource(image);
-
-        viewFlipper.addView(imageView);
-        viewFlipper.setFlipInterval(4000);
-        viewFlipper.setAutoStart(true);
-
-        viewFlipper.setInAnimation(this, android.R.anim.slide_in_left);
-        viewFlipper.setInAnimation(this, android.R.anim.slide_out_right);
-    }*/
+    public void init(){
+        toolbar = getActivity().findViewById(R.id.toolBar);
+        recyclerView = getActivity().findViewById(R.id.recycleView);
+        navigationView = getActivity().findViewById(R.id.nav2);
+        listView = getActivity().findViewById(R.id.listView);
+    }
 }

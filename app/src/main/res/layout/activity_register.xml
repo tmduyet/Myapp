@@ -16,7 +16,7 @@
         app:srcCompat="@drawable/logo" />
     <!--Nhap User-->
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editTextUser"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:background="#11000000"
@@ -26,11 +26,11 @@
         android:inputType="textPersonName"
         android:textSize="16dp"
         android:layout_marginBottom="30dp"
-        android:layout_above="@+id/editText2"
+        android:layout_above="@+id/editTextPassword"
         android:layout_centerHorizontal="true" />
     <!--Nhap Password-->
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/editTextPassword"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:background="#11000000"
@@ -38,12 +38,12 @@
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        android:layout_above="@+id/editText3"
+        android:layout_above="@+id/editTextCFPassword"
         android:layout_marginBottom="30dp"
-        android:layout_alignLeft="@+id/editText"
-        android:layout_alignStart="@+id/editText" />
+        android:layout_alignLeft="@+id/editTextUser"
+        android:layout_alignStart="@+id/editTextUser" />
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/editTextCFPassword"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:background="#11000000"
@@ -51,12 +51,12 @@
         android:ems="10"
         android:hint="Confirm Password"
         android:inputType="textPassword"
-        android:layout_above="@+id/editText4"
+        android:layout_above="@+id/editTextEmail"
         android:layout_marginBottom="30dp"
-        android:layout_alignLeft="@+id/editText2"
-        android:layout_alignStart="@+id/editText2" />
+        android:layout_alignLeft="@+id/editTextPassword"
+        android:layout_alignStart="@+id/editTextPassword" />
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/editTextEmail"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:background="#11000000"
@@ -64,12 +64,12 @@
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:layout_above="@+id/editText5"
+        android:layout_above="@+id/editTextPhone"
         android:layout_marginBottom="30dp"
-        android:layout_alignLeft="@+id/editText3"
-        android:layout_alignStart="@+id/editText3" />
+        android:layout_alignLeft="@+id/editTextCFPassword"
+        android:layout_alignStart="@+id/editTextCFPassword" />
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/editTextPhone"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:background="#11000000"
@@ -79,8 +79,8 @@
         android:inputType="numberDecimal"
         android:layout_marginBottom="70dp"
         android:layout_alignBottom="@+id/cardViewRegister"
-        android:layout_alignLeft="@+id/editText4"
-        android:layout_alignStart="@+id/editText4" />
+        android:layout_alignLeft="@+id/editTextEmail"
+        android:layout_alignStart="@+id/editTextEmail" />
     <!--CardView Login-->
     <androidx.cardview.widget.CardView
         android:layout_width="300dp"
@@ -89,7 +89,7 @@
         app:cardCornerRadius="25dp"
         app:cardElevation="10dp"
         android:id="@+id/cardViewRegister"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="100dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true">
 
@@ -107,4 +107,15 @@
                 android:textSize="18sp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/textHaveAccount"
+        android:textSize="18dp"
+        android:textColor="#fff"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="50dp"
+        android:text="Already Have Account? Login Here" />
 </RelativeLayout>
