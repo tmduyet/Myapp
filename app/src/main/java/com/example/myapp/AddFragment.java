@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
@@ -43,6 +44,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.net.URI;
 import java.util.ArrayList;
+
 
 import static android.app.Activity.RESULT_OK;
 
@@ -98,6 +100,15 @@ public class AddFragment extends Fragment {
         editsoluong =(EditText) view.findViewById(R.id.editsl);
         editmota = (EditText)view.findViewById(R.id.editmota);
 
+    }
+
+    boolean check()
+    {
+        if(imageView.getDrawable() == null || edittensach.getText().toString().matches("") || editgia.getText().toString().matches("")
+                || editgia.getText().toString().matches("")
+                || editsoluong.getText().toString().matches("") || editmota.getText().toString().matches(""))
+            return false;
+        return true;
     }
 
 
@@ -169,6 +180,7 @@ public class AddFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_add, container, false);
         init(v);
@@ -211,48 +223,51 @@ public class AddFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // Get the data from an ImageView as bytes
-                 final StorageReference mountainsRef = storageRef.child(edittensach.getText().toString());
-                imageView.setDrawingCacheEnabled(true);
-                imageView.buildDrawingCache();
-                Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                byte[] data = baos.toByteArray();
+                if(!check())
+                {
+                    Toast.makeText(getContext(), "Bạn đã bỏ trống 1 số thông tin", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    final StorageReference mountainsRef = storageRef.child(edittensach.getText().toString());
+                    imageView.setDrawingCacheEnabled(true);
+                    imageView.buildDrawingCache();
+                    Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                    byte[] data = baos.toByteArray();
 
-                final UploadTask uploadTask = mountainsRef.putBytes(data);
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        Toast.makeText(getContext(), "Lỗi upload hình ảnh", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        mountainsRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                sach.setTensach(edittensach.getText().toString());
-                                sach.setTacgia(edittacgia.getText().toString());
-                                sach.setTheloai(sptheloai.getSelectedItem().toString());
-                                sach.setGia(Float.parseFloat(editgia.getText().toString()));
-                                sach.setSoluong(Integer.parseInt(editsoluong.getText().toString()));
-                                sach.setMota(editmota.getText().toString());
-                                sach.setAnh(uri.toString());
-                                fdata.child("Sach").push().setValue(sach);
-                                Toast.makeText(getContext(), "Upload ảnh thành công", Toast.LENGTH_SHORT).show();
+                    final UploadTask uploadTask = mountainsRef.putBytes(data);
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Toast.makeText(getContext(), "Lỗi upload hình ảnh", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            mountainsRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    sach.setTensach(edittensach.getText().toString());
+                                    sach.setTacgia(edittacgia.getText().toString());
+                                    sach.setTheloai(sptheloai.getSelectedItem().toString());
+                                    sach.setGia(Integer.parseInt(editgia.getText().toString()));
+                                    sach.setSoluong(Integer.parseInt(editsoluong.getText().toString()));
+                                    sach.setMota(editmota.getText().toString());
+                                    sach.setAnh(uri.toString());
+                                    fdata.child("Sach").child(edittensach.getText().toString()).child(edittensach.getText().toString()).setValue(sach);
+                                    Toast.makeText(getContext(), "Tải thông tin thành công", Toast.LENGTH_SHORT).show();
 
-                            }
-                        });
-                    }
-                });
+                                }
+                            });
+                        }
+                    });
 
-
-
-
-
-
+                }
             }
         });
+
 
 
         btnclear.setOnClickListener(new View.OnClickListener() {

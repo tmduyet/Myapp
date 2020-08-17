@@ -44,6 +44,7 @@ public class AdminActivity extends AppCompatActivity {
 
         init();
 
+
         setFragment(addFragment);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

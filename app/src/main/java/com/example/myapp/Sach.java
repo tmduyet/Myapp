@@ -7,14 +7,14 @@ public class Sach {
     private String Tacgia;
     private String Theloai;
     private String Anh;
-    private float Gia;
+    private int Gia;
     private int Soluong;
     private String Mota;
 
     public Sach() {
     }
 
-    public Sach(String tensach, String tacgia, String theloai, String anh, float gia, int soluong, String mota) {
+    public Sach(String tensach, String tacgia, String theloai, String anh, int gia, int soluong, String mota) {
         Tensach = tensach;
         Tacgia = tacgia;
         Theloai = theloai;
@@ -40,7 +40,7 @@ public class Sach {
         return Anh;
     }
 
-    public float getGia() {
+    public int getGia() {
         return Gia;
     }
 
@@ -68,7 +68,7 @@ public class Sach {
         Anh = anh;
     }
 
-    public void setGia(float gia) {
+    public void setGia(int gia) {
         Gia = gia;
     }
 
