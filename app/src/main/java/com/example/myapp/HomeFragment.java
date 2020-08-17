@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -39,6 +40,7 @@ public class HomeFragment extends Fragment{
     private String mParam1;
     private String mParam2;
 
+    BottomNavigationView bottomNavigationView;
     private RecyclerView recyclerView;
 
     ArrayList<Sach> arrayList;
@@ -51,6 +53,7 @@ public class HomeFragment extends Fragment{
     void init(View v)
     {
         recyclerView = (RecyclerView) v.findViewById(R.id.recycleView);
+
     }
 
     /**
@@ -84,6 +87,7 @@ public class HomeFragment extends Fragment{
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         init(view);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         fdata = FirebaseDatabase.getInstance().getReference();
         arrayList = new ArrayList<Sach>();
@@ -94,6 +98,7 @@ public class HomeFragment extends Fragment{
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot :snapshot.getChildren())
                 {
+
                     Sach p = dataSnapshot.getValue(Sach.class);
                     arrayList.add(p);
                 }

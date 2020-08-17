@@ -38,7 +38,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtten.setText(datasach.get(position).getTensach());
-        holder.txtgia.setText(datasach.get(position).getGia());
+        holder.txtgia.setText(Integer.toString(datasach.get(position).getGia()));
         Picasso.get().load(datasach.get(position).getAnh()).into(holder.imageitem);
 
     }
