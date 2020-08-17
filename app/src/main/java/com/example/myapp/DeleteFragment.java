@@ -2,11 +2,25 @@ package com.example.myapp;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,14 +42,24 @@ public class DeleteFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DeleteFragment.
-     */
+
+    private ImageView imageView;
+    private Button btntimkiem, btnxoa;
+    private EditText edittensach;
+    private TextView tensach;
+
+
+
+    DatabaseReference fdata;
+    void init(View v)
+    {
+        imageView = (ImageView) v.findViewById(R.id.imgsach);
+        btnxoa = (Button) v.findViewById(R.id.btnxoa);
+        btntimkiem = (Button) v.findViewById(R.id.btntimkiem);
+        edittensach = (EditText) v.findViewById(R.id.edittimkiem);
+        tensach = (TextView) v.findViewById(R.id.txtthongtin);
+    }
+
     // TODO: Rename and change types and number of parameters
     public static DeleteFragment newInstance(String param1, String param2) {
         DeleteFragment fragment = new DeleteFragment();
@@ -59,6 +83,62 @@ public class DeleteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_delete, container, false);
+
+
+        View v =  inflater.inflate(R.layout.fragment_delete, container, false);
+
+        init(v);
+
+        fdata = FirebaseDatabase.getInstance().getReference();
+        btntimkiem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fdata.child("Sach").child(edittensach.getText().toString()).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                        Sach sach = snapshot.getValue(Sach.class);
+
+                        if(sach.getTensach().equals(edittensach.getText().toString()))
+                        {
+                            tensach.setText(sach.getTensach().toString());
+                            Glide.with(getContext())
+                                    .load(sach.getAnh())
+                                    .into(imageView);
+                        }
+
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+
+        btnxoa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fdata.child("Sach").child(edittensach.getText().toString()).removeValue();
+                Toast.makeText(getContext(), "Xoa Thanh cong", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return v;
     }
 }
