@@ -1,10 +1,12 @@
 package com.example.myapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,9 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder>{
     ArrayList<Sach> datasach;
 
     Context context;
+
+
+
 
     public ShopAdapter(ArrayList<com.example.myapp.Sach> sach, Context context) {
         datasach = sach;
@@ -38,8 +43,24 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtten.setText(datasach.get(position).getTensach());
-        holder.txtgia.setText(Integer.toString(datasach.get(position).getGia()));
+        holder.txtgia.setText(Integer.toString(datasach.get(position).getGia())) ;
         Picasso.get().load(datasach.get(position).getAnh()).into(holder.imageitem);
+
+        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context,ProductActivity.class);
+                intent.putExtra("image_url",datasach.get(position).getAnh());
+                intent.putExtra("tensach", datasach.get(position).getTensach());
+                intent.putExtra("tacgia", datasach.get(position).getTacgia());
+                intent.putExtra("gia", Integer.toString(datasach.get(position).getGia()));
+                intent.putExtra("mota",datasach.get(position).getTacgia());
+                intent.putExtra("theloai",datasach.get(position).getTheloai());
+
+                context.startActivity(intent);
+
+            }
+        });
 
     }
 
@@ -54,12 +75,17 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder>{
         ImageView imageitem;
         TextView txtten;
         TextView txtgia;
+        LinearLayout parentLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imageitem = (ImageView) itemView.findViewById(R.id.imagesp);
             txtgia = (TextView) itemView.findViewById(R.id.itemgia);
             txtten = (TextView) itemView.findViewById(R.id.itemten);
+            parentLayout = itemView.findViewById(R.id.splll);
+
+
+
         }
     }
 }
