@@ -256,7 +256,7 @@ public class AddFragment extends Fragment {
                                     sach.setSoluong(Integer.parseInt(editsoluong.getText().toString()));
                                     sach.setMota(editmota.getText().toString());
                                     sach.setAnh(uri.toString());
-                                    fdata.child("Sach").child(edittensach.getText().toString()).child(edittensach.getText().toString()).setValue(sach);
+                                    fdata.child("Sach").child(edittensach.getText().toString()).setValue(sach);
                                     Toast.makeText(getContext(), "Tải thông tin thành công", Toast.LENGTH_SHORT).show();
 
                                 }

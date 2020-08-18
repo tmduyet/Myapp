@@ -21,6 +21,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -93,35 +94,20 @@ public class DeleteFragment extends Fragment {
         btntimkiem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fdata.child("Sach").child(edittensach.getText().toString()).addChildEventListener(new ChildEventListener() {
+                fdata.child("Sach").child(edittensach.getText().toString()).addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                        Sach sach = snapshot.getValue(Sach.class);
-
-                        if(sach.getTensach().equals(edittensach.getText().toString()))
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren())
                         {
-                            tensach.setText(sach.getTensach().toString());
-                            Glide.with(getContext())
-                                    .load(sach.getAnh())
-                                    .into(imageView);
+                            Sach sach = snapshot.getValue(Sach.class);
+                            if(sach.getTensach().equals(edittensach.getText().toString()))
+                            {
+                                tensach.setText(sach.getTensach().toString());
+                                Glide.with(getContext())
+                                        .load(sach.getAnh())
+                                        .into(imageView);
+                            }
                         }
-
-                    }
-
-                    @Override
-                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
                     }
 
                     @Override
@@ -129,13 +115,33 @@ public class DeleteFragment extends Fragment {
 
                     }
                 });
+
+
             }
         });
 
         btnxoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fdata.child("Sach").child(edittensach.getText().toString()).removeValue();
+                fdata.child("Sach").child(edittensach.getText().toString()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot dataSnapshot : snapshot.getChildren())
+                        {
+                            Sach sach = snapshot.getValue(Sach.class);
+                            if(sach.getTensach().equals(edittensach.getText().toString()))
+                            {
+                              fdata.child("Sach").child( snapshot.getKey()).removeValue();
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
                 Toast.makeText(getContext(), "Xoa Thanh cong", Toast.LENGTH_SHORT).show();
             }
         });

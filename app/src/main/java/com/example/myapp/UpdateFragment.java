@@ -33,6 +33,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -208,7 +209,7 @@ public class UpdateFragment extends Fragment {
 
             }
         });
-        Sach a = new Sach();
+
         btntimkiem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -217,45 +218,79 @@ public class UpdateFragment extends Fragment {
                     Toast.makeText(getContext(), "Vui long nhap ten sach", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    fdata.child("Sach").child(edittensach.getText().toString()).addChildEventListener(new ChildEventListener() {
+//                    fdata.child("Sach").child(edittensach.getText().toString()).addChildEventListener(new ChildEventListener() {
+//                        @Override
+//                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//
+//
+//                            Sach sach = snapshot.getValue(Sach.class);
+//
+//                            if(sach.getTensach().equals(edittensach.getText().toString()))
+//                            {
+//                                edittacgia.setText(sach.getTacgia());
+//                                editmota.setText(sach.getMota());
+//                                int spinerps = arrayAdapter.getPosition(sach.getTheloai());
+//                                sptheloai.setSelection(spinerps);
+//                                editgia.setText(String.valueOf(sach.getGia()));
+//                                editsoluong.setText(String.valueOf(sach.getSoluong()));
+//                                Glide.with(getContext())
+//                                        .load(sach.getAnh())
+//                                        .into(imageView);
+//
+//                            }
+//                            else
+//                            {
+//                                Toast.makeText(getContext(), "Khong co thong tin", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                        }
+//                    });
+                    fdata.child("Sach").child(edittensach.getText().toString()).addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-
-
-                            Sach sach = snapshot.getValue(Sach.class);
-
-                            if(sach.getTensach().equals(edittensach.getText().toString()))
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for(DataSnapshot dataSnapshot : snapshot.getChildren());
                             {
-                                edittacgia.setText(sach.getTacgia());
-                                editmota.setText(sach.getMota());
-                                int spinerps = arrayAdapter.getPosition(sach.getTheloai());
-                                sptheloai.setSelection(spinerps);
-                                editgia.setText(String.valueOf(sach.getGia()));
-                                editsoluong.setText(String.valueOf(sach.getSoluong()));
-                                Glide.with(getContext())
-                                        .load(sach.getAnh())
-                                        .into(imageView);
+                                Sach sach = snapshot.getValue(Sach.class);
+                                 if(sach == null)
+                                 {
+                                     Toast.makeText(getContext(), "Khong tim thay", Toast.LENGTH_SHORT).show();
+                                     return;
+                                 }
+                                    if(sach.getTensach().equals(edittensach.getText().toString()))
+                                {
+                                    edittacgia.setText(sach.getTacgia());
+                                    editmota.setText(sach.getMota());
+                                    int spinerps = arrayAdapter.getPosition(sach.getTheloai());
+                                    sptheloai.setSelection(spinerps);
+                                    editgia.setText(String.valueOf(sach.getGia()));
+                                    editsoluong.setText(String.valueOf(sach.getSoluong()));
+                                    Glide.with(getContext())
+                                            .load(sach.getAnh())
+                                            .into(imageView);
+                                    return;
 
+                                }
                             }
-                            else
-                            {
-                                Toast.makeText(getContext(), "Khong co thong tin", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                        }
-
-                        @Override
-                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                        }
-
-                        @Override
-                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
                         }
 
@@ -264,7 +299,6 @@ public class UpdateFragment extends Fragment {
 
                         }
                     });
-
                 }
 
             }
