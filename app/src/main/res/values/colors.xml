@@ -6,4 +6,6 @@
     <color name="White">#ffffff</color>
     <color name="Whitesa">#80ffffff</color>
     <color name="Greenlachuoi">#1AD60A</color>
+    <color name="tabtextcolor">#fff</color>
+    <color name="tabindicatorcolor">#2d2d2d</color>
 </resources>

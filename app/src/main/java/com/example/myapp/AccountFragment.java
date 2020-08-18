@@ -93,25 +93,7 @@ public class AccountFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
-    }
-
-
-
-
-    public void logout(View view) {
-        FirebaseAuth.getInstance().signOut();//logout
-        startActivity(new Intent(getActivity(),LoginActivity.class));
-        getActivity().finish();
-    }
-
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        /*phone = getActivity().findViewById(R.id.profilePhone);
+        phone = getActivity().findViewById(R.id.profilePhone);
         fullName = getActivity().findViewById(R.id.profileName);
         email = getActivity().findViewById(R.id.profileEmail);
         resetPassLocal = getActivity().findViewById(R.id.resetPasswordLocal);
@@ -139,7 +121,7 @@ public class AccountFragment extends Fragment {
         userId = fAuth.getCurrentUser().getUid();
         user = fAuth.getCurrentUser();
 
-       /*if (!user.isEmailVerified()) {
+       if (!user.isEmailVerified()) {
            //verifyMsg.setVisibility(View.VISIBLE);
             //resendCode.setVisibility(View.VISIBLE);
 
@@ -160,10 +142,10 @@ public class AccountFragment extends Fragment {
                     });
                 }
             });
-        }*/
+        }
 
 
-        /*DocumentReference documentReference = fStore.collection("users").document(userId);
+        DocumentReference documentReference = fStore.collection("users").document(userId);
         documentReference.addSnapshotListener((Executor) this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
@@ -233,7 +215,25 @@ public class AccountFragment extends Fragment {
 //
 
             }
-        });*/
+        });
+    }
+
+
+
+
+    public void logout(View view) {
+        FirebaseAuth.getInstance().signOut();//logout
+        startActivity(new Intent(getActivity(),LoginActivity.class));
+        getActivity().finish();
+    }
+
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_account, container, false);
 
     }

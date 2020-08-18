@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/vhvn"
+
+            android:title="Van Hoc Viet Nam" />
+        <item
+            android:id="@+id/khcn"
+
+            android:title="Khoa Hoc Cong Nghe" />
+        <item
+            android:id="@+id/hh"
+
+            android:title="Hai Huoc" />
+        <item
+            android:id="@+id/hd"
+
+            android:title="Hanh Dong" />
+        <item
+            android:id="@+id/ct"
+
+            android:title="Chinh Tri" />
+        <item
+            android:id="@+id/tn"
+
+            android:title="Thieu Nhi" />
+        <item
+            android:id="@+id/tt"
+
+            android:title="Tieu Thuyet" />
+        <item
+            android:id="@+id/kd"
+
+            android:title="Kinh Di" />
+        <item
+            android:id="@+id/lm"
+
+            android:title="Lang Man" />
+    </group>
+
+</menu>
