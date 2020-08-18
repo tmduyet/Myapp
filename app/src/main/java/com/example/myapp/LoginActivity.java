@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
@@ -38,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         mUser = findViewById(R.id.editTextUserEmail);
         mPass = findViewById(R.id.editTextPassword);
         forgotTextLink = findViewById(R.id.textForgetpass);
+        final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
 
         CardView cardViewLogin = (CardView)findViewById(R.id.cardViewLogin);
         cardViewLogin.setOnClickListener(new View.OnClickListener() {
@@ -62,8 +65,15 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                            if(currentFirebaseUser.getUid().equals("Qp38dcwZcJaj8DF4vXvVnUZxTTH2")){
+                                Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(), AdminActivity.class));
+                            }
+                            else {
+                                Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            }
                         }
                         else{
                             Toast.makeText(LoginActivity.this, "Can't Login!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -134,4 +144,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 }
