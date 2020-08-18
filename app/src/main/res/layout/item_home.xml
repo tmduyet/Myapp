@@ -2,8 +2,9 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" 
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:layout_height="220dp"
+    android:orientation="horizontal"
+    android:id="@+id/splll">
     <ImageView
         android:id="@+id/imagesp"
         android:layout_width="200dp"
@@ -15,12 +16,17 @@
         <TextView
             android:id="@+id/itemten"
             android:layout_width="match_parent"
-            android:layout_height="100dp"/>
+            android:layout_height="100dp"
+            android:hint="Ten san pham"
+            android:textSize="20dp"
+            />
         <TextView
             android:id="@+id/itemgia"
             android:layout_width="match_parent"
-            android:layout_height="100dp"/>
-
+            android:layout_height="100dp"
+            android:hint="Gia tien"
+            android:textSize="20dp"
+            />
     </LinearLayout>
 
 
