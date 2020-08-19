@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         Init();
 
         setFragment(homeFragment);
+
         main_nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

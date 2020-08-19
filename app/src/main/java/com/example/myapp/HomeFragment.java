@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,9 +45,9 @@ public class HomeFragment extends Fragment{
     BottomNavigationView bottomNavigationView;
     private RecyclerView recyclerView;
 
-    ArrayList<Sach> arrayList;
+    ArrayList<Sach> arrayList  = null;
     DatabaseReference fdata;
-    ShopAdapter shopAdapter;
+    ShopAdapter shopAdapter ;
     //private SliderAdapterHF adapter;
     public HomeFragment() {
         // Required empty public constructor
@@ -93,18 +94,29 @@ public class HomeFragment extends Fragment{
         fdata = FirebaseDatabase.getInstance().getReference();
         arrayList = new ArrayList<Sach>();
 
-
-        fdata.child("Sach").addValueEventListener(new ValueEventListener() {
+        fdata.child("Sach").addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot :snapshot.getChildren())
-                {
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-                    Sach p = dataSnapshot.getValue(Sach.class);
-                    arrayList.add(p);
-                }
+                Sach p = snapshot.getValue(Sach.class);
+                         arrayList.add(p);
                 shopAdapter = new ShopAdapter(arrayList,getContext());
                 recyclerView.setAdapter(shopAdapter);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
             }
 
             @Override
@@ -112,6 +124,28 @@ public class HomeFragment extends Fragment{
 
             }
         });
+
+
+
+
+//        fdata.child("Sach").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot dataSnapshot :snapshot.getChildren())
+//                {
+//
+//                    Sach p = dataSnapshot.getValue(Sach.class);
+//                    arrayList.add(p);
+//                }
+//                shopAdapter = new ShopAdapter(arrayList,getContext());
+//                recyclerView.setAdapter(shopAdapter);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
 
 

@@ -54,7 +54,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder>{
                 intent.putExtra("tensach", datasach.get(position).getTensach());
                 intent.putExtra("tacgia", datasach.get(position).getTacgia());
                 intent.putExtra("gia", Integer.toString(datasach.get(position).getGia()));
-                intent.putExtra("mota",datasach.get(position).getTacgia());
+                intent.putExtra("mota",datasach.get(position).getMota());
                 intent.putExtra("theloai",datasach.get(position).getTheloai());
 
                 context.startActivity(intent);

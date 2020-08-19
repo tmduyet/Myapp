@@ -207,11 +207,11 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // open gallery
-                Intent i = new Intent(v.getContext(), EditProfile.class);
-                i.putExtra("fullName", fullName.getText().toString());
-                i.putExtra("email", email.getText().toString());
-                i.putExtra("phone", phone.getText().toString());
-                startActivity(i);
+//                Intent i = new Intent(v.getContext(), EditProfile.class);
+//                i.putExtra("fullName", fullName.getText().toString());
+//                i.putExtra("email", email.getText().toString());
+//                i.putExtra("phone", phone.getText().toString());
+//                startActivity(i);
 //
 
             }
