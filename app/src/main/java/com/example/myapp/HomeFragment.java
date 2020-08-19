@@ -11,6 +11,7 @@ import android.widget.Toolbar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -99,9 +100,10 @@ public class HomeFragment extends Fragment{
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
                 Sach p = snapshot.getValue(Sach.class);
-                         arrayList.add(p);
+                arrayList.add(p);
                 shopAdapter = new ShopAdapter(arrayList,getContext());
                 recyclerView.setAdapter(shopAdapter);
+                recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
             }
 
             @Override

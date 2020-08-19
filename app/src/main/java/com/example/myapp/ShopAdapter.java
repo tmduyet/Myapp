@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -56,7 +57,6 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder>{
                 intent.putExtra("gia", Integer.toString(datasach.get(position).getGia()));
                 intent.putExtra("mota",datasach.get(position).getMota());
                 intent.putExtra("theloai",datasach.get(position).getTheloai());
-
                 context.startActivity(intent);
 
             }
@@ -75,7 +75,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder>{
         ImageView imageitem;
         TextView txtten;
         TextView txtgia;
-        LinearLayout parentLayout;
+        CardView parentLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 

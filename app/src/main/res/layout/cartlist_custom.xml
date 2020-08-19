@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/cuslisthinh"
+        android:layout_width="163dp"
+        android:layout_height="163dp" />
+    <TextView
+        android:gravity="center"
+        android:layout_toRightOf="@+id/cuslisthinh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ten"
+        android:textSize="25sp"
+        android:id="@+id/cuslistten"/>
+    <TextView
+        android:textColor="#FF0000"
+        android:id="@+id/cuslistgia"
+        android:gravity="center"
+        android:layout_below="@+id/cuslistten"
+        android:layout_toRightOf="@+id/cuslisthinh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Gia"
+        android:textSize="25sp"/>
+    <Button
+        android:id="@+id/cuslistbot"
+        android:layout_below="@+id/cuslistgia"
+        android:layout_toRightOf="@+id/cuslisthinh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+    <TextView
+        android:gravity="center"
+        android:id="@+id/cuslistsoluong"
+        android:layout_toRightOf="@+id/cuslistbot"
+        android:layout_below="@+id/cuslistgia"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="35sp"/>
+    <Button
+        android:id="@+id/cuslistthem"
+        android:layout_below="@+id/cuslistgia"
+        android:layout_toRightOf="@+id/cuslistsoluong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+    <Button
+        android:id="@+id/cuslistxoa"
+        android:layout_below="@+id/cuslistbot"
+        android:layout_toRightOf="@+id/cuslisthinh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Xóa"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+</RelativeLayout>
