@@ -47,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         mCfPass = findViewById(R.id.editTextCFPassword);
         mEmail = findViewById(R.id.editTextEmail);
         mPhone = findViewById(R.id.editTextPhone);
+        fStore = FirebaseFirestore.getInstance();
 
         /*if(mAuth.getCurrentUser() != null){
             startActivity(new Intent(RegisterActivity.this, MainActivity.class));
@@ -86,20 +87,8 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            /*FirebaseUser fuser = mAuth.getCurrentUser();
-                            fuser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(RegisterActivity.this, "Verification Email Has been Sent.", Toast.LENGTH_SHORT).show();
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d(TAG, "onFailure: Email not sent " + e.getMessage());
-                                }
-                            });*/
                             Toast.makeText(RegisterActivity.this, "User Created!", Toast.LENGTH_SHORT).show();
-                            /*userID = mAuth.getCurrentUser().getUid();
+                            userID = mAuth.getCurrentUser().getUid();
                             DocumentReference documentReference = fStore.collection("users").document(userID);
                             Map<String,Object> user = new HashMap<>();
                             user.put("fName",fullName);
@@ -115,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 public void onFailure(@NonNull Exception e) {
                                     Log.d(TAG, "onFailure: " + e.toString());
                                 }
-                            });*/
+                            });
                             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                         }
                         else{
@@ -136,4 +125,6 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
+
+
 }

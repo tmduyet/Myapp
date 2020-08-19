@@ -17,14 +17,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -56,13 +59,12 @@ public class AccountFragment extends Fragment {
     TextView fullName,email,phone,verifyMsg;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-    String userId;
+    String userId, name, phonenb, mail;
     Button resendCode;
-    Button resetPassLocal,changeProfileImage;
+    Button resetPassLocal,changeProfileImage, logout;
     FirebaseUser user;
     ImageView profileImage;
     StorageReference storageReference;
-
     public AccountFragment() {
         // Required empty public constructor
     }
@@ -93,18 +95,23 @@ public class AccountFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        phone = getActivity().findViewById(R.id.profilePhone);
-        fullName = getActivity().findViewById(R.id.profileName);
-        email = getActivity().findViewById(R.id.profileEmail);
-        resetPassLocal = getActivity().findViewById(R.id.resetPasswordLocal);
 
-        profileImage = getActivity().findViewById(R.id.profileImage);
-        changeProfileImage = getActivity().findViewById(R.id.changeProfile);
-
-
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v =  inflater.inflate(R.layout.fragment_account, container, false);
+        init(v);
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
+        userId = fAuth.getCurrentUser().getUid();
+        final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        currentFirebaseUser.getUid();
+        userId = fAuth.getCurrentUser().getUid();
+        name = currentFirebaseUser.getPhoneNumber();
+        fullName.setText(name);
 
         StorageReference profileRef = storageReference.child("users/" + fAuth.getCurrentUser().getUid() + "/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -114,52 +121,20 @@ public class AccountFragment extends Fragment {
             }
         });
 
-        resendCode = getActivity().findViewById(R.id.resendCode);
-        verifyMsg = getActivity().findViewById(R.id.verifyMsg);
-
-
-        userId = fAuth.getCurrentUser().getUid();
-        user = fAuth.getCurrentUser();
-
-       if (!user.isEmailVerified()) {
-           //verifyMsg.setVisibility(View.VISIBLE);
-            //resendCode.setVisibility(View.VISIBLE);
-
-            resendCode.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
-
-                    user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(v.getContext(), "Verification Email Has been Sent.", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d("tag", "onFailure: Email not sent " + e.getMessage());
-                        }
-                    });
-                }
-            });
-        }
-
-
-        DocumentReference documentReference = fStore.collection("users").document(userId);
-        documentReference.addSnapshotListener((Executor) this, new EventListener<DocumentSnapshot>() {
+        final DocumentReference documentReference = fStore.collection("users").document(userId);
+        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                if (documentSnapshot.exists()) {
+                if(documentSnapshot.exists()){
                     phone.setText(documentSnapshot.getString("phone"));
                     fullName.setText(documentSnapshot.getString("fName"));
                     email.setText(documentSnapshot.getString("email"));
 
-                } else {
+                }else {
                     Log.d("tag", "onEvent: Document do not exists");
                 }
             }
         });
-
 
         resetPassLocal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,35 +182,36 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // open gallery
-//                Intent i = new Intent(v.getContext(), EditProfile.class);
-//                i.putExtra("fullName", fullName.getText().toString());
-//                i.putExtra("email", email.getText().toString());
-//                i.putExtra("phone", phone.getText().toString());
-//                startActivity(i);
-//
-
+                Intent i = new Intent(v.getContext(), EditProfile.class);
+                i.putExtra("fullName", fullName.getText().toString());
+                i.putExtra("email", email.getText().toString());
+                i.putExtra("phone", phone.getText().toString());
+                startActivity(i);
             }
         });
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //FirebaseAuth.getInstance().signOut();//logout
+                startActivity(new Intent(getActivity(),LoginActivity.class));
+               // getActivity().finish();
+            }
+        });
+        return v;
+
     }
 
-
-
-
-    public void logout(View view) {
-        FirebaseAuth.getInstance().signOut();//logout
-        startActivity(new Intent(getActivity(),LoginActivity.class));
-        getActivity().finish();
-    }
-
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-        return inflater.inflate(R.layout.fragment_account, container, false);
-
+    void init(View view)
+    {
+        phone = (TextView)view.findViewById(R.id.profilePhone);
+        fullName = (TextView)view.findViewById(R.id.profileNameAccount);
+        email = (TextView)view.findViewById(R.id.profileEmail);
+        resetPassLocal = (Button)view.findViewById(R.id.resetPasswordLocal);
+        profileImage = (ImageView)view.findViewById(R.id.profileImage);
+        changeProfileImage = (Button)view.findViewById(R.id.changeProfile);
+        resendCode = (Button)view.findViewById(R.id.resendCode);
+        verifyMsg = (TextView)view.findViewById(R.id.verifyMsg);
+        logout = (Button)view.findViewById(R.id.buttonLogout);
     }
 
 }
