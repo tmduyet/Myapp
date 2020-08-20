@@ -101,8 +101,9 @@ public class ProductActivity extends AppCompatActivity {
                     cart.setSoluong(Integer.parseInt(txtsl.getText().toString()));
                     currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                     String a = currentFirebaseUser.getUid();
-                    Toast.makeText(ProductActivity.this, a , Toast.LENGTH_SHORT).show();
+
                     fdata.child("Cart").child(a).child(cart.getTensach()).setValue(cart);
+                    Toast.makeText(ProductActivity.this, "Đặt sản phẩm thành công" , Toast.LENGTH_SHORT).show();
                 }
                 else
                 {

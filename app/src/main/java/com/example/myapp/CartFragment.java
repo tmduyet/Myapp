@@ -96,10 +96,11 @@ public class CartFragment extends Fragment {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Cart cart = snapshot.getValue(Cart.class);
-
                 cartApdapter  = new CartApdapter(getContext(),R.layout.cartlist_custom,cartArrayList);
                 cartArrayList.add(cart);
                 listView.setAdapter(cartApdapter);
+                cartApdapter.notifyDataSetChanged();
+                listView.invalidateViews();
             }
 
             @Override
