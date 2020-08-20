@@ -21,6 +21,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
 public class ProductActivity extends AppCompatActivity {
@@ -60,26 +61,22 @@ public class ProductActivity extends AppCompatActivity {
         fdata = FirebaseDatabase.getInstance().getReference();
 
 
-
         btnthem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sl +=1;
+                sl += 1;
                 String a = String.valueOf(sl);
-               txtsl.setText(a);
+                txtsl.setText(a);
             }
         });
         btnbot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sl -=1;
-                if(sl<1)
-                {
+                sl -= 1;
+                if (sl < 1) {
                     Toast.makeText(ProductActivity.this, "Không thể giảm sản phẩm", Toast.LENGTH_SHORT).show();
-                    sl=1;
-                }
-                else
-                {
+                    sl = 1;
+                } else {
                     String a = String.valueOf(sl);
                     txtsl.setText(a);
                 }
@@ -90,34 +87,67 @@ public class ProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-                if (sl>0)
-                {
+                String a = currentFirebaseUser.getUid();
+                if (sl > 0) {
                     cart = new Cart();
                     String Image = getIntent().getStringExtra("image_url");
                     cart.setTensach(txttensach.getText().toString());
                     cart.setAnh(Image);
                     cart.setGia(Integer.parseInt(txtgia.getText().toString()));
                     cart.setSoluong(Integer.parseInt(txtsl.getText().toString()));
-                    currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                    String a = currentFirebaseUser.getUid();
 
-                    fdata.child("Cart").child(a).child(cart.getTensach()).setValue(cart);
-                    Toast.makeText(ProductActivity.this, "Đặt sản phẩm thành công" , Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+
+
+                    fdata.child("Cart").child(a).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                            for (DataSnapshot dataSnapshot:snapshot.getChildren())
+//                            {
+                                if(snapshot.getValue() == null)
+                                {
+                                    fdata.child("Cart").child(a).child(cart.getTensach()).setValue(cart);
+                                    Toast.makeText(ProductActivity.this, "Khong co child", Toast.LENGTH_SHORT).show();
+
+                                }
+                                else
+                                {
+                                    fdata.child("Cart").child(a).child(cart.getTensach()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if(snapshot.getValue() != null)
+                                            {
+                                                Cart cart2 = snapshot.getValue(Cart.class);
+                                                if(cart2.getTensach().equals(cart.getTensach()))
+                                                {
+                                                    cart.setSoluong(Integer.parseInt(txtsl.getText().toString())+cart2.getSoluong());
+                                                    fdata.child("Cart").child(a).child(cart.getTensach()).setValue(cart);
+                                                }
+                                            }
+                                        }
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+//                               }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                   // fdata.child("Cart").child(a).child(cart.getTensach()).setValue(cart);
+                    Toast.makeText(ProductActivity.this, "Thêm thành công !", Toast.LENGTH_SHORT).show();
+                } else {
                     Toast.makeText(ProductActivity.this, "Sản Phẩm không được trống", Toast.LENGTH_SHORT).show();
                 }
-              
-
             }
         });
-
-
     }
-
-
     private void getIncomingIntent()
     {
         if(getIntent().hasExtra("image_url")&&getIntent().hasExtra("tensach"))
