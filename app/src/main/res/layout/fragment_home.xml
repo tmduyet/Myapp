@@ -13,13 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <androidx.appcompat.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:title="Home"
-                android:id="@+id/toolBar"
-                android:background="#04FF68"
-                ></androidx.appcompat.widget.Toolbar>
+
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
