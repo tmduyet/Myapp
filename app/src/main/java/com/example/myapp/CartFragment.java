@@ -2,11 +2,24 @@ package com.example.myapp;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,7 +49,20 @@ public class CartFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment CartFragment.
      */
-    // TODO: Rename and change types and number of parameters
+
+
+
+
+    ListView listView;
+    ArrayList<Cart> cartArrayList;
+    CartApdapter cartApdapter;
+    DatabaseReference fdata;
+    FirebaseUser currentUser;
+
+    void init(View v)
+    {
+        listView = (ListView) v.findViewById(R.id.liscart);
+    }
     public static CartFragment newInstance(String param1, String param2) {
         CartFragment fragment = new CartFragment();
         Bundle args = new Bundle();
@@ -59,6 +85,47 @@ public class CartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false);
+        View v =  inflater.inflate(R.layout.fragment_cart, container, false);
+        init(v);
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+
+        cartArrayList = new ArrayList<>();
+        fdata = FirebaseDatabase.getInstance().getReference();
+        fdata.child("Cart").child(currentUser.getUid()).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Cart cart = snapshot.getValue(Cart.class);
+
+                cartApdapter  = new CartApdapter(getContext(),R.layout.cartlist_custom,cartArrayList);
+                cartArrayList.add(cart);
+                listView.setAdapter(cartApdapter);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
+        return  v;
     }
 }

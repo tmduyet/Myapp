@@ -1,5 +1,7 @@
 package com.example.myapp;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -7,10 +9,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 
 public class ProductActivity extends AppCompatActivity {
 
@@ -18,19 +29,24 @@ public class ProductActivity extends AppCompatActivity {
     TextView txttensach,txtgia,txtsl, txttacgia, txttheloai, txtmota;
     Button btnthem,btnbot, btndat;
 
-    int sl = 0;
+
+    DatabaseReference fdata;
+    Cart cart;
+    FirebaseUser currentFirebaseUser;
+
+    int sl = 1;
     void init()
     {
-        imageView = findViewById(R.id.imgsanpham);
-        txttensach = findViewById(R.id.txttensp);
-        txtgia = findViewById(R.id.txtgia);
-        txtsl = findViewById(R.id.sl);
-        txttacgia = findViewById(R.id.txttacgia);
-        txttheloai = findViewById(R.id.txttheloai);
-        txtmota = findViewById(R.id.txtmota);
-        btnthem = findViewById(R.id.btnthem);
-        btnbot = findViewById(R.id.btnbot);
-        btndat  = findViewById(R.id.btndat);
+        imageView = (ImageView) findViewById(R.id.imgsanpham);
+        txttensach = (TextView) findViewById(R.id.txttensp);
+        txtgia =  (TextView) findViewById(R.id.txtgia);
+        txtsl = (TextView) findViewById(R.id.sl);
+        txttacgia =(TextView)  findViewById(R.id.txttacgia);
+        txttheloai = (TextView) findViewById(R.id.txttheloai);
+        txtmota = (TextView) findViewById(R.id.txtmota);
+        btnthem = (Button) findViewById(R.id.btnthem);
+        btnbot = (Button)findViewById(R.id.btnbot);
+        btndat  =(Button) findViewById(R.id.btndat);
     }
     @SuppressLint("RestrictedApi")
     @Override
@@ -40,6 +56,11 @@ public class ProductActivity extends AppCompatActivity {
 
         init();
         getIncomingIntent();
+
+        fdata = FirebaseDatabase.getInstance().getReference();
+
+
+
         btnthem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,16 +73,42 @@ public class ProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sl -=1;
-                if(sl<0)
+                if(sl<1)
                 {
                     Toast.makeText(ProductActivity.this, "Không thể giảm sản phẩm", Toast.LENGTH_SHORT).show();
-                    sl=0;
+                    sl=1;
                 }
                 else
                 {
                     String a = String.valueOf(sl);
                     txtsl.setText(a);
                 }
+
+            }
+        });
+        btndat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                if (sl>0)
+                {
+                    cart = new Cart();
+                    String Image = getIntent().getStringExtra("image_url");
+                    cart.setTensach(txttensach.getText().toString());
+                    cart.setAnh(Image);
+                    cart.setGia(Integer.parseInt(txtgia.getText().toString()));
+                    cart.setSoluong(Integer.parseInt(txtsl.getText().toString()));
+                    currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    String a = currentFirebaseUser.getUid();
+                    Toast.makeText(ProductActivity.this, a , Toast.LENGTH_SHORT).show();
+                    fdata.child("Cart").child(a).child(cart.getTensach()).setValue(cart);
+                }
+                else
+                {
+                    Toast.makeText(ProductActivity.this, "Sản Phẩm không được trống", Toast.LENGTH_SHORT).show();
+                }
+              
 
             }
         });

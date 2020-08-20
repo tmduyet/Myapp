@@ -11,23 +11,25 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 public class CartApdapter extends BaseAdapter {
 
      private Context context;
      private int layout;
-     private List<Sach> sachList;
+     private List<Cart> cartList;
 
-    public CartApdapter(Context context, int layout, List<Sach> sachList) {
+    public CartApdapter(Context context, int layout, List<Cart> cartLinst) {
         this.context = context;
         this.layout = layout;
-        this.sachList = sachList;
+        this.cartList = cartLinst;
     }
 
     @Override
     public int getCount() {
-        return sachList.size();
+        return cartList.size();
     }
 
     @Override
@@ -45,7 +47,6 @@ public class CartApdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(layout, null);
 
-
         ImageView imageView = view.findViewById(R.id.cuslisthinh);
         TextView custen = view.findViewById(R.id.cuslistten);
         TextView cusgia = view.findViewById(R.id.cuslistgia);
@@ -53,6 +54,21 @@ public class CartApdapter extends BaseAdapter {
         Button custhem = view.findViewById(R.id.cuslistthem);
         TextView cussoluong = view.findViewById(R.id.cuslistsoluong);
         Button cusxoa = view.findViewById(R.id.cuslistxoa);
-        return null;
+
+
+        Cart cart = cartList.get(i);
+         custen.setText(cart.getTensach());
+         cusgia.setText(String.valueOf(cart.getGia()));
+         cussoluong.setText(String.valueOf(cart.getSoluong()));
+        Glide.with(context)
+                .load(cart.getAnh())
+                .into(imageView);
+        return view;
+
+
+
+
+
+
     }
 }
