@@ -15,64 +15,44 @@
             android:id="@+id/imgsanpham"
             android:layout_width="match_parent"
             android:layout_height="400dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <TextView
-            android:id="@+id/txttensp"
-            android:layout_width="match_parent"
+            android:id="@+id/ten"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:textSize="25sp"
-            android:hint="Ten"
-            android:gravity="center"/>
-       <LinearLayout
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:orientation="horizontal">
-           <TextView
-           android:id="@+id/txtgia"
-           android:layout_width="200dp"
-           android:layout_height="wrap_content"
-           android:textSize="25sp"
-           android:hint="gia"/>
-           <TextView
-               android:layout_width="200dp"
-               android:layout_height="wrap_content"
-               android:textSize="25sp"
-               android:text="VND"/>
-       </LinearLayout>
+            android:text="Tên:"/>
+        <TextView
+            android:id="@+id/txttensp"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:hint="Ten"/>
+    </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <Button
-                android:id="@+id/btnthem"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:text="+"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
             <TextView
-                android:id="@+id/sl"
-                android:layout_width="100dp"
+                android:id="@+id/tengia"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
-                android:hint="0"
-                android:gravity="center" />
-
-            <Button
-                android:id="@+id/btnbot"
-                android:layout_width="100dp"
+                android:text="Giá:"/>
+            <TextView
+                android:id="@+id/txtgia"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
-                android:text="-"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                />
-            <Button
-                android:id="@+id/btndat"
-                android:layout_width="100dp"
+                android:hint="Gia"/>
+            <TextView
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
-                android:text="Đặt"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                />
+                android:text="VND"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -86,7 +66,7 @@
                 android:text="Tác giả:"/>
             <TextView
                 android:id="@+id/txttacgia"
-                android:layout_width="300dp"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 />
@@ -103,9 +83,44 @@
                 android:text="Thể loại:"/>
             <TextView
                 android:id="@+id/txttheloai"
-                android:layout_width="300dp"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btnthem"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="+"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+            <TextView
+                android:id="@+id/sl"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:hint="0"
+                android:gravity="center" />
+            <Button
+                android:id="@+id/btnbot"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="-"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                />
+            <Button
+                android:id="@+id/btndat"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="Đặt"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 />
         </LinearLayout>
         <LinearLayout
@@ -113,7 +128,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
@@ -123,9 +137,7 @@
                 android:id="@+id/txtmota"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                />
+                android:textSize="25sp" />
         </LinearLayout>
     </LinearLayout>
-
 </ScrollView>

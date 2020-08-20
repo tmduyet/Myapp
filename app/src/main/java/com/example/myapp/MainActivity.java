@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         homeFragment = new HomeFragment();
         accountFragment = new AccountFragment();
         cartFragment = new CartFragment();
-        toolbar = findViewById(R.id.toolBar);
+        //toolbar = findViewById(R.id.toolBar);
         nav_header = findViewById(R.id.drawer_layout);
     }
     @Override
