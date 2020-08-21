@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -58,10 +60,16 @@ public class CartFragment extends Fragment {
     CartApdapter cartApdapter;
     DatabaseReference fdata;
     FirebaseUser currentUser;
+    Button btntongtien;
 
+    TextView txttongtien;
+
+    public int tongtien;
     void init(View v)
     {
         listView = (ListView) v.findViewById(R.id.liscart);
+        btntongtien = (Button) v.findViewById(R.id.btntinhtien);
+        txttongtien = (TextView) v.findViewById(R.id.txttongtien);
     }
     public static CartFragment newInstance(String param1, String param2) {
         CartFragment fragment = new CartFragment();
@@ -98,6 +106,8 @@ public class CartFragment extends Fragment {
                 Cart cart = snapshot.getValue(Cart.class);
                 cartApdapter  = new CartApdapter(getContext(),R.layout.cartlist_custom,cartArrayList);
                 cartArrayList.add(cart);
+                tongtien += (cart.getSoluong()*cart.getGia());
+                txttongtien.setText(String.valueOf(tongtien));
                 listView.setAdapter(cartApdapter);
                 cartApdapter.notifyDataSetChanged();
                 listView.invalidateViews();
@@ -126,6 +136,12 @@ public class CartFragment extends Fragment {
 
 
 
+        btntongtien.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fdata.child("Donhang").child(currentUser.getUid()).setValue(tongtien);
+            }
+        });
 
         return  v;
     }

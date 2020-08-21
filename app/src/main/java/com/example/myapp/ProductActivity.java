@@ -100,7 +100,7 @@ public class ProductActivity extends AppCompatActivity {
 
 
 
-                    fdata.child("Cart").child(a).addListenerForSingleValueEvent(new ValueEventListener() {
+                    fdata.child("Cart").child(a).child(cart.getTensach()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
 //                            for (DataSnapshot dataSnapshot:snapshot.getChildren())
@@ -108,7 +108,7 @@ public class ProductActivity extends AppCompatActivity {
                                 if(snapshot.getValue() == null)
                                 {
                                     fdata.child("Cart").child(a).child(cart.getTensach()).setValue(cart);
-                                    Toast.makeText(ProductActivity.this, "Khong co child", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ProductActivity.this, "Thành công !", Toast.LENGTH_SHORT).show();
 
                                 }
                                 else
