@@ -59,7 +59,7 @@ public class AccountFragment extends Fragment {
     TextView fullName,email,phone,verifyMsg;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-    String userId, name, phonenb, mail;
+    String userId;
     Button resendCode;
     Button resetPassLocal,changeProfileImage, logout;
     FirebaseUser user;
@@ -107,11 +107,10 @@ public class AccountFragment extends Fragment {
         fStore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
         userId = fAuth.getCurrentUser().getUid();
-        final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        user = fAuth.getCurrentUser();
+
+        final FirebaseUser currentFirebaseUser = fAuth.getCurrentUser();
         currentFirebaseUser.getUid();
-        userId = fAuth.getCurrentUser().getUid();
-        name = currentFirebaseUser.getPhoneNumber();
-        fullName.setText(name);
 
         StorageReference profileRef = storageReference.child("users/" + fAuth.getCurrentUser().getUid() + "/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -122,17 +121,14 @@ public class AccountFragment extends Fragment {
         });
 
         final DocumentReference documentReference = fStore.collection("users").document(userId);
-        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                if(documentSnapshot.exists()){
-                    phone.setText(documentSnapshot.getString("phone"));
-                    fullName.setText(documentSnapshot.getString("fName"));
-                    email.setText(documentSnapshot.getString("email"));
+        documentReference.addSnapshotListener((documentSnapshot, e) -> {
+            if(documentSnapshot.exists()){
+                phone.setText(documentSnapshot.getString("phone"));
+                fullName.setText(documentSnapshot.getString("fName"));
+                email.setText(documentSnapshot.getString("email"));
 
-                }else {
-                    Log.d("tag", "onEvent: Document do not exists");
-                }
+            }else {
+                Log.d("tag", "onEvent: Document do not exists");
             }
         });
 
@@ -194,10 +190,14 @@ public class AccountFragment extends Fragment {
             public void onClick(View view) {
                 //FirebaseAuth.getInstance().signOut();//logout
                 startActivity(new Intent(getActivity(),LoginActivity.class));
-               // getActivity().finish();
+                //getActivity().finish();
             }
         });
         return v;
+
+    }
+
+    public void logout(View view){
 
     }
 

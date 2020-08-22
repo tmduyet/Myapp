@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -267,9 +268,6 @@ public class AddFragment extends Fragment {
                 }
             }
         });
-
-
-
         btnclear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

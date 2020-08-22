@@ -12,6 +12,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -34,6 +36,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -41,16 +45,18 @@ public class MainActivity extends AppCompatActivity {
     private AppBarLayout appBarLayout;
     private ViewPager viewPager;
 
+    private NavigationView navigationViewHeader;
     private BottomNavigationView main_nav;
     private FrameLayout mainFrame;
     private DrawerLayout nav_header;
-
+    private FirebaseAuth mAuth;
     private  HomeFragment homeFragment;
     private  AccountFragment accountFragment;
+    private  NotAccountFragment notAccountFragment;
     private  CartFragment cartFragment;
+    private DatabaseReference fdata;
 
     Toolbar toolbar;
-
 
     void Init()
     {
@@ -58,9 +64,11 @@ public class MainActivity extends AppCompatActivity {
         mainFrame = (FrameLayout) findViewById(R.id.main_framelayout);
         homeFragment = new HomeFragment();
         accountFragment = new AccountFragment();
+        notAccountFragment = new NotAccountFragment();
         cartFragment = new CartFragment();
         //toolbar = findViewById(R.id.toolBar);
         nav_header = findViewById(R.id.drawer_layout);
+        navigationViewHeader = findViewById(R.id.navView);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +76,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Init();
-
-
-
-
+        mAuth = FirebaseAuth.getInstance();
         setFragment(homeFragment);
-
+        fdata = FirebaseDatabase.getInstance().getReference().child("Sach");
         main_nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -83,8 +88,14 @@ public class MainActivity extends AppCompatActivity {
                         setFragment(homeFragment);
                         return true;
                     case R.id.nav_acc:
-                        setFragment(accountFragment);
-                        return true;
+                        if(mAuth.getCurrentUser() != null) {
+                            setFragment(accountFragment);
+                            return true;
+                        }
+                        else{
+                            setFragment(notAccountFragment);
+                            return true;
+                        }
                     case R.id.nav_cart:
                         setFragment(cartFragment);
                         return true;

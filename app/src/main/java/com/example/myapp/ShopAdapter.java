@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,15 +20,21 @@ import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder>{
 
     ArrayList<Sach> datasach;
-
+    //private List<Sach> listSach;
+    //private List<Sach> listSachFull;
     Context context;
 
 
-
+    /*public ShopAdapter(List<Sach> listSach){
+        this.listSach = listSach;
+        this.listSachFull = new ArrayList<>(listSach);
+    }*/
 
 
     public ShopAdapter(ArrayList<com.example.myapp.Sach> sach, Context context) {
@@ -61,8 +69,8 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder>{
                 intent.putExtra("gia", Integer.toString(datasach.get(position).getGia()));
                 intent.putExtra("mota",datasach.get(position).getMota());
                 intent.putExtra("theloai",datasach.get(position).getTheloai());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
-
             }
         });
 
@@ -92,4 +100,36 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder>{
 
         }
     }
+    /*@Override
+    public Filter getFilter() {
+        return sachFilter;
+    }
+    private Filter sachFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<Sach>filteredList = new ArrayList<>();
+            if(charSequence.toString().isEmpty()){
+                filteredList.addAll(listSachFull);
+            }
+            else{
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+                for (Sach item : listSachFull){
+                    if(item.getTensach().toLowerCase().contains(filterPattern));{
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            listSach.clear();
+            listSach.addAll((Collection<? extends Sach>) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };*/
+
 }

@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,13 +57,13 @@ public class CartFragment extends Fragment {
 
 
     ListView listView;
-    ArrayList<Cart> cartArrayList;
+    ArrayList<Cart> cartArrayList, cartArrayList2;
     CartApdapter cartApdapter;
     DatabaseReference fdata;
     FirebaseUser currentUser;
     Button btntongtien;
 
-    TextView txttongtien;
+    TextView txttongtien, textTimer;
 
     public int tongtien;
     void init(View v)
@@ -70,6 +71,7 @@ public class CartFragment extends Fragment {
         listView = (ListView) v.findViewById(R.id.liscart);
         btntongtien = (Button) v.findViewById(R.id.btntinhtien);
         txttongtien = (TextView) v.findViewById(R.id.txttongtien);
+        //textTimer = (TextView) v.findViewById(R.id.textTimer);
     }
     public static CartFragment newInstance(String param1, String param2) {
         CartFragment fragment = new CartFragment();
@@ -97,9 +99,9 @@ public class CartFragment extends Fragment {
         init(v);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-
-        cartArrayList = new ArrayList<>();
         fdata = FirebaseDatabase.getInstance().getReference();
+        cartArrayList = new ArrayList<>();
+
         fdata.child("Cart").child(currentUser.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -142,6 +144,49 @@ public class CartFragment extends Fragment {
                 fdata.child("Donhang").child(currentUser.getUid()).setValue(tongtien);
             }
         });
+        new CountDownTimer(3000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                //textTimer.setText("seconds remaining: " + millisUntilFinished / 1000);
+            }
+            public void onFinish() {
+                cartArrayList.clear();
+                //cartArrayList2 = new ArrayList<>();
+                fdata.child("Cart").child(currentUser.getUid()).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                        Cart cart = snapshot.getValue(Cart.class);
+                        cartApdapter  = new CartApdapter(getContext(),R.layout.cartlist_custom, cartArrayList);
+                        cartArrayList.add(cart);
+                        tongtien += (cart.getSoluong()*cart.getGia());
+                        txttongtien.setText(String.valueOf(tongtien));
+                        listView.setAdapter(cartApdapter);
+                        cartApdapter.notifyDataSetChanged();
+                        listView.invalidateViews();
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                start();
+            }
+        }.start();
 
         return  v;
     }

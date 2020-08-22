@@ -29,6 +29,8 @@ public class LoginActivity extends AppCompatActivity {
     ProgressBar progressBar;
     EditText mUser, mPass, mEmail;
     TextView forgotTextLink;
+    long backPressTime;
+    Toast backToast;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,9 +41,8 @@ public class LoginActivity extends AppCompatActivity {
         mUser = findViewById(R.id.editTextUserEmail);
         mPass = findViewById(R.id.editTextPassword);
         forgotTextLink = findViewById(R.id.textForgetpass);
-        final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-
+        final FirebaseUser currentFirebaseUser = mAuth.getCurrentUser();
+        //FirebaseAuth.getInstance().signOut();
         CardView cardViewLogin = (CardView)findViewById(R.id.cardViewLogin);
         cardViewLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,8 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-
-                            if(currentFirebaseUser.getUid().equals("Qp38dcwZcJaj8DF4vXvVnUZxTTH2")){
+                            if(currentFirebaseUser.getEmail().equals("admin@admin.com")){
                                 Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getApplicationContext(), AdminActivity.class));
                             }
@@ -145,4 +145,18 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+            if(backPressTime + 2000 > System.currentTimeMillis()){
+                //Intent intent = new Intent(this, LoginActivity.class);
+                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                //startActivity(intent);
+                finishAffinity();
+            }
+            else{
+                backToast = Toast.makeText(getBaseContext(), "Press Back Again To Exit", Toast.LENGTH_SHORT);
+                backToast.show();
+            }
+            backPressTime = System.currentTimeMillis();
+    }
 }
