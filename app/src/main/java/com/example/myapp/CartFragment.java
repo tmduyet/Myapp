@@ -22,8 +22,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.protobuf.StringValue;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -102,16 +104,16 @@ public class CartFragment extends Fragment {
 
         fdata = FirebaseDatabase.getInstance().getReference();
         cartArrayList = new ArrayList<>();
+        cartApdapter  = new CartApdapter(getContext(),R.layout.cartlist_custom,cartArrayList);
+        listView.setAdapter(cartApdapter);
 
         fdata.child("Cart").child(currentUser.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Cart cart = snapshot.getValue(Cart.class);
-                cartApdapter  = new CartApdapter(getContext(),R.layout.cartlist_custom,cartArrayList);
                 cartArrayList.add(cart);
                 tongtien += (cart.getSoluong()*cart.getGia());
                 txttongtien.setText(String.valueOf(tongtien));
-                listView.setAdapter(cartApdapter);
                 cartApdapter.notifyDataSetChanged();
                 listView.invalidateViews();
             }
@@ -142,30 +144,38 @@ public class CartFragment extends Fragment {
         btntongtien.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                fdata.child("Donhang").child(currentUser.getUid()).setValue(tongtien);
-                fdata.child("Cart").child(currentUser.getUid()).removeValue();
-                Toast.makeText(getContext(), "Thanh toan thanh cong vui long refesh lai trang", Toast.LENGTH_SHORT).show();
+                if(cartArrayList.isEmpty())
+                {
+                    Toast.makeText(getContext(), "Vui lòng đặt hàng", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    fdata.child("Donhang").child(currentUser.getUid()).child(String.valueOf(tongtien)).setValue(tongtien);
+                    fdata.child("Cart").child(currentUser.getUid()).removeValue();
+                    Toast.makeText(getContext(), "Thanh toán thành công vui lòng refresh lại trang", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
 
-        new CountDownTimer(1000, 1000) {
+        new CountDownTimer(5000, 1000) {
             public void onTick(long millisUntilFinished) {
-                //textTimer.setText("seconds remaining: " + millisUntilFinished / 1000);
+                if(cartArrayList.isEmpty())
+                    txttongtien.setText("0");
             }
             public void onFinish() {
                 cartArrayList.clear();
                 tongtien = 0;
+                cartApdapter  = new CartApdapter(getContext(),R.layout.cartlist_custom, cartArrayList);
+                listView.setAdapter(cartApdapter);
                 fdata.child("Cart").child(currentUser.getUid()).addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                         Cart cart = snapshot.getValue(Cart.class);
-                        cartApdapter  = new CartApdapter(getContext(),R.layout.cartlist_custom, cartArrayList);
+
                         cartArrayList.add(cart);
                         tongtien += (cart.getSoluong()*cart.getGia());
                         txttongtien.setText(String.valueOf(tongtien));
-                        listView.setAdapter(cartApdapter);
                         cartApdapter.notifyDataSetChanged();
                         listView.invalidateViews();
                     }

@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private  NotAccountFragment notAccountFragment;
     private  CartFragment cartFragment;
     private DatabaseReference fdata;
+    private DonhangFragment donhangFragment;
 
     Toolbar toolbar;
 
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         //toolbar = findViewById(R.id.toolBar);
         nav_header = findViewById(R.id.drawer_layout);
         navigationViewHeader = findViewById(R.id.navView);
+        donhangFragment = new DonhangFragment();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         Init();
         mAuth = FirebaseAuth.getInstance();
         setFragment(homeFragment);
-        fdata = FirebaseDatabase.getInstance().getReference().child("Sach");
+        //fdata = FirebaseDatabase.getInstance().getReference().child("Sach");
         main_nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -98,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     case R.id.nav_cart:
                         setFragment(cartFragment);
+                        return true;
+                    case R.id.nav_donhang:
+                        setFragment(donhangFragment);
                         return true;
                     default:
                         return false;

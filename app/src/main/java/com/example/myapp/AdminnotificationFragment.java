@@ -84,6 +84,7 @@ public class AdminnotificationFragment extends Fragment {
         fdata = FirebaseDatabase.getInstance().getReference();
         arrayList = new ArrayList();
         arrayAdapter = new ArrayAdapter(getContext(),android.R.layout.simple_list_item_1,arrayList);
+        lv.setAdapter(arrayAdapter);
         fdata.child("Donhang").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -93,10 +94,9 @@ public class AdminnotificationFragment extends Fragment {
                     String key = dataSnapshot.getKey();
                     arrayList.add(key);
                     arrayList.add(dataSnapshot.getValue().toString());
-
+                    arrayAdapter.notifyDataSetChanged();
                 }
-                arrayAdapter = new ArrayAdapter(getContext(),android.R.layout.simple_list_item_1,arrayList);
-                lv.setAdapter(arrayAdapter);
+
 
             }
 
