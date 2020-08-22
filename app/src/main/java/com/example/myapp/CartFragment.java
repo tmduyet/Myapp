@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -141,16 +142,21 @@ public class CartFragment extends Fragment {
         btntongtien.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 fdata.child("Donhang").child(currentUser.getUid()).setValue(tongtien);
+                fdata.child("Cart").child(currentUser.getUid()).removeValue();
+                Toast.makeText(getContext(), "Thanh toan thanh cong vui long refesh lai trang", Toast.LENGTH_SHORT).show();
+
             }
         });
-        new CountDownTimer(3000, 1000) {
+
+        new CountDownTimer(1000, 1000) {
             public void onTick(long millisUntilFinished) {
                 //textTimer.setText("seconds remaining: " + millisUntilFinished / 1000);
             }
             public void onFinish() {
                 cartArrayList.clear();
-                //cartArrayList2 = new ArrayList<>();
+                tongtien = 0;
                 fdata.child("Cart").child(currentUser.getUid()).addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

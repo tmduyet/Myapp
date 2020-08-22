@@ -27,8 +27,6 @@ import android.app.SearchManager;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.ChildEventListener;
@@ -227,7 +225,7 @@ public class HomeFragment extends Fragment{
                 listsach.add(obj);
             }
         }
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
         ShopAdapter adapterShop2 = new ShopAdapter(listsach, getActivity().getApplicationContext());
         recyclerView.setAdapter(adapterShop2);
     }

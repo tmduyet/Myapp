@@ -1,6 +1,7 @@
 package com.example.myapp;
 
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -135,10 +136,6 @@ public class CartApdapter extends BaseAdapter {
                         Toast.makeText(context, "Error !!", Toast.LENGTH_SHORT).show();
                     }
                 });
-
-
-
-
             }
         });
                         
