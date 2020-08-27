@@ -67,6 +67,7 @@ public class CartApdapter extends BaseAdapter {
 
                     fdata = FirebaseDatabase.getInstance().getReference();
                     currentuser = FirebaseAuth.getInstance().getCurrentUser();
+
                     ImageView imageView = view.findViewById(R.id.cuslisthinh);
                     TextView custen = view.findViewById(R.id.cuslistten);
                     TextView cusgia = view.findViewById(R.id.cuslistgia);

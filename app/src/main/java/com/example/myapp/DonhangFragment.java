@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,6 +83,8 @@ public class DonhangFragment extends Fragment {
     DatabaseReference fdata;
     FirebaseUser currentUser;
 
+    Donhangadapter donhangadapter;
+    ArrayList<Donhang> donhangArrayList;
     void init(View v)
     {
         listView = v.findViewById(R.id.listdonhang);
@@ -131,25 +135,81 @@ public class DonhangFragment extends Fragment {
         });
 
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Dialog d = new Dialog(getActivity());
+//                d.setContentView(R.layout.dialog);
+//
+//               Button btnxoa = (Button)d.findViewById(R.id.button);
+//               btnxoa.setOnClickListener(new View.OnClickListener() {
+//                   @Override
+//                   public void onClick(View view) {
+//                       String selectedFromList =(listView.getItemAtPosition(i).toString());
+//                       Toast.makeText(getContext(), selectedFromList, Toast.LENGTH_SHORT).show();
+//                       fdata.child("Donhang").child(currentUser.getUid()).child(selectedFromList).removeValue();
+//                       arrayAdapter.notifyDataSetChanged();
+//                   }
+//               });
+//
+//                d.show();
+//                return true;
+//            }
+//        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                String selectedFromList =(listView.getItemAtPosition(i).toString());
                 Dialog d = new Dialog(getActivity());
                 d.setContentView(R.layout.dialog);
 
-               Button btnxoa = (Button)d.findViewById(R.id.button);
-               btnxoa.setOnClickListener(new View.OnClickListener() {
+                ListView listchitiet = (ListView)d.findViewById(R.id.listchitiet);
+               donhangArrayList = new ArrayList<>();
+               donhangadapter = new Donhangadapter(getContext(),R.layout.laychuanodaivcl,donhangArrayList);
+                listchitiet.setAdapter(donhangadapter);
+                fdata.child("Donhang").child(currentUser.getUid()).child(selectedFromList).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                        Donhang donhang = snapshot.getValue(Donhang.class);
+                        donhangArrayList.add(donhang);
+                        donhangadapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                Button btnxoa = (Button)d.findViewById(R.id.button);
+                btnxoa.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View view) {
-                       String selectedFromList =(listView.getItemAtPosition(i).toString());
-                       Toast.makeText(getContext(), selectedFromList, Toast.LENGTH_SHORT).show();
+
+                       Toast.makeText(getContext(),"Huy thanh cong !", Toast.LENGTH_SHORT).show();
                        fdata.child("Donhang").child(currentUser.getUid()).child(selectedFromList).removeValue();
                        arrayAdapter.notifyDataSetChanged();
                    }
                });
 
+
                 d.show();
-                return true;
             }
         });
         return v;

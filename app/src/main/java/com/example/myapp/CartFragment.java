@@ -1,12 +1,15 @@
 package com.example.myapp;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.os.CountDownTimer;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +25,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.protobuf.StringValue;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -67,7 +74,6 @@ public class CartFragment extends Fragment {
     Button btntongtien;
 
     TextView txttongtien, textTimer;
-
     public int tongtien;
     void init(View v)
     {
@@ -104,7 +110,9 @@ public class CartFragment extends Fragment {
 
         fdata = FirebaseDatabase.getInstance().getReference();
         cartArrayList = new ArrayList<>();
+
         cartApdapter  = new CartApdapter(getContext(),R.layout.cartlist_custom,cartArrayList);
+
         listView.setAdapter(cartApdapter);
 
         fdata.child("Cart").child(currentUser.getUid()).addChildEventListener(new ChildEventListener() {
@@ -116,8 +124,9 @@ public class CartFragment extends Fragment {
                 txttongtien.setText(String.valueOf(tongtien));
                 cartApdapter.notifyDataSetChanged();
                 listView.invalidateViews();
-            }
 
+
+            }
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
@@ -142,67 +151,84 @@ public class CartFragment extends Fragment {
 
 
         btntongtien.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                if(cartArrayList.isEmpty())
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                LocalDateTime currentday = LocalDateTime.now();
+                Random rd = new Random();
+                int a = rd.nextInt(1000000000);
+                if(listView.getCount() == 0)
                 {
                     Toast.makeText(getContext(), "Vui lòng đặt hàng", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    fdata.child("Donhang").child(currentUser.getUid()).child(String.valueOf(tongtien)).setValue(tongtien);
+                        Donhang don = new Donhang();
+                        for (Cart cart : cartArrayList)
+                        {
+                            don.setTensach(cart.getTensach());
+                            don.setNgaydat(String.valueOf(currentday));
+                            don.setSoluong(cart.getSoluong());
+                            don.setTongtienct(cart.getGia()*cart.getSoluong());
+                            don.setTrangthai("Processing");
+                            fdata.child("Donhang").child(currentUser.getUid()).child(String.valueOf(a)).child(don.getTensach()).setValue(don);
+                            tongtien = 0;
+                            txttongtien.setText(String.valueOf(tongtien));
+                        }
                     fdata.child("Cart").child(currentUser.getUid()).removeValue();
                     Toast.makeText(getContext(), "Thanh toán thành công vui lòng refresh lại trang", Toast.LENGTH_SHORT).show();
-                }
+                    }
 
-            }
+                cartApdapter.notifyDataSetChanged();
+                }
         });
 
-        new CountDownTimer(5000, 1000) {
-            public void onTick(long millisUntilFinished) {
-                if(cartArrayList.isEmpty())
-                    txttongtien.setText("0");
-            }
-            public void onFinish() {
-                cartArrayList.clear();
-                tongtien = 0;
-                cartApdapter  = new CartApdapter(getContext(),R.layout.cartlist_custom, cartArrayList);
-                listView.setAdapter(cartApdapter);
-                fdata.child("Cart").child(currentUser.getUid()).addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                        Cart cart = snapshot.getValue(Cart.class);
-
-                        cartArrayList.add(cart);
-                        tongtien += (cart.getSoluong()*cart.getGia());
-                        txttongtien.setText(String.valueOf(tongtien));
-                        cartApdapter.notifyDataSetChanged();
-                        listView.invalidateViews();
-                    }
-
-                    @Override
-                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-                start();
-            }
-        }.start();
+//        new CountDownTimer(5000, 1000) {
+//            public void onTick(long millisUntilFinished) {
+//                if(cartArrayList.isEmpty())
+//                    txttongtien.setText("0");
+//            }
+//            public void onFinish() {
+//                cartArrayList.clear();
+//                tongtien = 0;
+//                cartApdapter  = new CartApdapter(getContext(),R.layout.cartlist_custom, cartArrayList);
+//                listView.setAdapter(cartApdapter);
+//                fdata.child("Cart").child(currentUser.getUid()).addChildEventListener(new ChildEventListener() {
+//                    @Override
+//                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                        Cart cart = snapshot.getValue(Cart.class);
+//
+//                        cartArrayList.add(cart);
+//                        tongtien += (cart.getSoluong()*cart.getGia());
+//                        txttongtien.setText(String.valueOf(tongtien));
+//                        cartApdapter.notifyDataSetChanged();
+//                        listView.invalidateViews();
+//                    }
+//
+//                    @Override
+//                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//                start();
+//            }
+//        }.start();
 
         return  v;
     }

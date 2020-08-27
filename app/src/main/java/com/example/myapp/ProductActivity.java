@@ -103,8 +103,6 @@ public class ProductActivity extends AppCompatActivity {
                     fdata.child("Cart").child(a).child(cart.getTensach()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                            for (DataSnapshot dataSnapshot:snapshot.getChildren())
-//                            {
                                 if(snapshot.getValue() == null)
                                 {
                                     fdata.child("Cart").child(a).child(cart.getTensach()).setValue(cart);
@@ -140,7 +138,6 @@ public class ProductActivity extends AppCompatActivity {
 
                         }
                     });
-                   // fdata.child("Cart").child(a).child(cart.getTensach()).setValue(cart);
                     Toast.makeText(ProductActivity.this, "Thêm thành công !", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(ProductActivity.this, "Sản Phẩm không được trống", Toast.LENGTH_SHORT).show();
