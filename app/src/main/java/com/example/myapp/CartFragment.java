@@ -74,7 +74,7 @@ public class CartFragment extends Fragment {
     Button btntongtien;
 
     TextView txttongtien, textTimer;
-    public int tongtien;
+    public int tongtien = 0;
     void init(View v)
     {
         listView = (ListView) v.findViewById(R.id.liscart);

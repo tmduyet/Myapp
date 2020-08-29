@@ -1,5 +1,6 @@
 package com.example.myapp;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,8 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -96,20 +100,31 @@ public class AdminnotificationFragment extends Fragment {
                     arrayList.add(dataSnapshot.getValue().toString());
                     arrayAdapter.notifyDataSetChanged();
                 }
-
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                String selectedFromList = (lv.getItemAtPosition(i).toString());
+                Dialog d = new Dialog(getActivity());
+                d.setContentView(R.layout.dialog);
+                Button btnxoa = (Button) d.findViewById(R.id.button6);
+                btnxoa.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-
-
-
+                        Toast.makeText(getContext(), "Huy thanh cong !", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                d.show();
+            }
+        });
         return view;
     }
+
 }

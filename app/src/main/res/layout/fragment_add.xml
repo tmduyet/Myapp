@@ -41,6 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:textColor="#000"
+                android:textSize="20dp"
                 android:hint="Tác giả" />
 
             <TextView
@@ -56,6 +57,7 @@
                 android:id="@+id/sptheloai"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:textSize="20dp"
                 />
             <TextView
                 android:id="@+id/txtchonanh"
@@ -74,13 +76,14 @@
                 >
                 <ImageView
                     android:id="@+id/imgsach"
-                    android:layout_width="200dp"
+                    android:layout_width="220dp"
                     android:layout_height="200dp"/>
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/btnchonanh"
                     android:backgroundTint="#DFDFDF"
+                    android:textColor="#000000"
                     android:textSize="20dp"
                     android:text="Chọn ảnh"
                     />
@@ -102,6 +105,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="0"
+                android:textSize="20dp"
                 android:inputType="numberDecimal" />
             <TextView
                 android:id="@+id/txtsl"
@@ -120,6 +124,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:textColor="#000"
+                android:textSize="20dp"
                 android:inputType="numberDecimal"
                 tools:ignore="DuplicateIds"
                 android:hint="0"/>
@@ -140,6 +145,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:textColor="#000"
+                android:textSize="20dp"
                 android:hint="Mô tả"/>
             <LinearLayout
                 android:layout_width="match_parent"
