@@ -66,11 +66,10 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            if(currentFirebaseUser.getEmail().equals("admin@admin.com")){
+                            if (currentFirebaseUser.getEmail().equals("admin@admin.com")) {
                                 Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getApplicationContext(), AdminActivity.class));
-                            }
-                            else {
+                            } else {
                                 Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             }

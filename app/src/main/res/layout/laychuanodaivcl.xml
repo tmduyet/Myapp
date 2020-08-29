@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,42 +8,91 @@
     android:id="@+id/con">
 
     <TextView
-        android:id="@+id/donhangngaydat"
+        android:id="@+id/tensach"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Tên Sách"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:textColor="#000"
+        tools:layout_editor_absoluteX="-16dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentTop="true"/>
+    <TextView
+        android:id="@+id/donhangten"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
         android:text="TextView"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/donhanggia"
-        tools:layout_editor_absoluteX="-16dp" />
-
+        android:layout_below="@+id/tensach"
+        android:layout_marginBottom="30dp"
+        tools:layout_editor_absoluteX="0dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/soluong"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:textColor="#000"
+        android:text="Số Lượng"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@id/donhangten"/>
     <TextView
         android:id="@+id/donhangsoluong"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="144dp"
         android:text="TextView"
         android:textSize="25sp"
-        app:layout_constraintTop_toBottomOf="@+id/donhangten"
+        android:layout_below="@+id/soluong"
+        android:textColor="#000"
+        android:layout_marginBottom="30dp"
         tools:layout_editor_absoluteX="0dp" />
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tongtien"
+        android:textStyle="bold"
+        android:text="Thành Tiền"
+        android:textSize="25dp"
+        android:textColor="#000"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@id/donhangsoluong"/>
     <TextView
         android:id="@+id/donhanggia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:textColor="#000"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/donhangsoluong"
-        app:layout_constraintVertical_bias="0.28"
+        android:layout_below="@+id/tongtien"
+        android:layout_marginBottom="30dp"
         tools:layout_editor_absoluteX="16dp" />
-
     <TextView
-        android:id="@+id/donhangten"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ngaylap"
+        android:textStyle="bold"
+        android:text="Ngày Thanh Toán"
+        android:textSize="25dp"
+        android:textColor="#000"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/donhanggia"/>
+    <TextView
+        android:id="@+id/donhangngaydat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:layout_below="@+id/ngaylap"
         android:textSize="25sp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textColor="#000"
+        tools:layout_editor_absoluteX="-16dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="---------------------------------------"
+        android:layout_below="@+id/donhangngaydat"
+        android:textSize="25sp"
+        tools:layout_editor_absoluteX="-16dp"
+        />
+</RelativeLayout>

@@ -15,8 +15,10 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -129,7 +131,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.admin_botmenu, menu);
+        MenuInflater inflater = getMenuInflater();
+        MenuInflater inflater2 = getMenuInflater();
+        inflater.inflate(R.menu.admin_botmenu, menu);
+        inflater2.inflate(R.menu.activity_main_drawer, menu);
         return true;
     }
 
@@ -140,6 +145,19 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             super.onBackPressed();
+        }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.vhvn:
+                Intent intent = new Intent(MainActivity.this, TheLoaiActivity.class);
+                intent.putExtra("Theloai", "Văn học Việt Nam");
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

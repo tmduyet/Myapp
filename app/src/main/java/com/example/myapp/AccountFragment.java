@@ -188,7 +188,7 @@ public class AccountFragment extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //FirebaseAuth.getInstance().signOut();//logout
+                //fAuth.signOut();//logout
                 startActivity(new Intent(getActivity(),LoginActivity.class));
                 //getActivity().finish();
             }

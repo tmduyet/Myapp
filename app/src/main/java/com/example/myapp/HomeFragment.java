@@ -58,7 +58,6 @@ public class HomeFragment extends Fragment{
 
     BottomNavigationView bottomNavigationView;
     private RecyclerView recyclerView;
-    private EditText editTextSearch;
     ArrayList<Sach> arrayList;
     DatabaseReference fdata;
     ShopAdapter shopAdapter ;
@@ -177,27 +176,6 @@ public class HomeFragment extends Fragment{
                 }
             });
         }
-        /*editTextSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(!editable.toString().isEmpty()){
-                    search(editable.toString());
-                }
-                else{
-                    search("");
-                }
-            }
-        });
 //        fdata.child("Sach").addValueEventListener(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -229,46 +207,4 @@ public class HomeFragment extends Fragment{
         ShopAdapter adapterShop2 = new ShopAdapter(listsach, getActivity().getApplicationContext());
         recyclerView.setAdapter(adapterShop2);
     }
-    /*private void searchfirebase(String s) {
-        String quary = s.toLowerCase();
-        Query query = fdata.orderByChild("Sach").startAt(s).endAt(s + "\uf8ff");
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.hasChildren()){
-                    arrayList.clear();
-                    for(DataSnapshot dss : snapshot.getChildren()){
-                        final Sach sach = dss.getValue(Sach.class);
-                        arrayList.add(sach);
-                    }
-                    ShopAdapter adaptershop = new ShopAdapter(arrayList, getActivity().getApplicationContext());
-                    recyclerView.setAdapter(adaptershop);
-                    adaptershop.notifyDataSetChanged();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }*/
-
-    /*@Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.sach_menu, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView)searchItem.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
-            @Override
-            public boolean onQueryTextSubmit(String query){
-                return false;
-            }
-            @Override
-            public boolean onQueryTextChange(String newText){
-                shopAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
-        super.onCreateOptionsMenu(menu, inflater);
-    }*/
 }

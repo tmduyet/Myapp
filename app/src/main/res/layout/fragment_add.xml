@@ -14,13 +14,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp"
+                android:textColor="#000"
                 android:text="Tên sách:"
+                android:textStyle="bold"
                 android:textSize="20dp" />
 
             <EditText
                 android:id="@+id/edittensach"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:textColor="#000"
                 android:hint="Tên sách" />
 
             <TextView
@@ -29,12 +32,15 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp"
                 android:text="Tác giả:"
+                android:textStyle="bold"
+                android:textColor="#000"
                 android:textSize="20dp" />
 
             <EditText
                 android:id="@+id/edittacgia"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:textColor="#000"
                 android:hint="Tác giả" />
 
             <TextView
@@ -42,6 +48,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp"
+                android:textStyle="bold"
+                android:textColor="#000"
                 android:text="Thể loại:"
                 android:textSize="20dp" />
             <Spinner
@@ -55,6 +63,8 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp"
                 android:text="Ảnh:"
+                android:textStyle="bold"
+                android:textColor="#000"
                 android:textSize="20dp" />
             <LinearLayout
                 android:id="@+id/addlayout2"
@@ -80,12 +90,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp"
+                android:textColor="#000"
                 android:text="Giá:"
+                android:textStyle="bold"
                 android:textSize="20dp" />
 
             <EditText
                 android:id="@+id/editgia"
-                android:layout_width="267dp"
+                android:layout_width="match_parent"
+                android:textColor="#000"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="0"
@@ -95,7 +108,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp"
+                android:textStyle="bold"
                 android:text="Số lượng:"
+                android:textColor="#000"
                 android:textSize="20dp" />
 
 
@@ -104,6 +119,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:textColor="#000"
                 android:inputType="numberDecimal"
                 tools:ignore="DuplicateIds"
                 android:hint="0"/>
@@ -114,6 +130,8 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp"
                 android:text="Mô tả:"
+                android:textStyle="bold"
+                android:textColor="#000"
                 android:textSize="20dp" />
 
 
@@ -121,26 +139,32 @@
                 android:id="@+id/editmota"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:textColor="#000"
                 android:hint="Mô tả"/>
-            <Button
-                android:id="@+id/btnsave"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:text="Save"
-                android:textColor="#000000"
-                android:backgroundTint="#DFDFDF"
-                />
-            <Button
-                android:id="@+id/btnclear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:text="Clear"
-                android:textColor="#000000"
-                android:backgroundTint="#DFDFDF"
-                />
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/btnsave"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:text="Save"
+                    android:textColor="#000000"
+                    android:backgroundTint="#DFDFDF"
+                    />
+                <Button
+                    android:id="@+id/btnclear"
+                    android:layout_width="110dp"
+                    android:layout_marginLeft="140dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:text="Clear"
+                    android:textColor="#000000"
+                    android:backgroundTint="#DFDFDF"
+                    />
+            </LinearLayout>
             </LinearLayout>
 
 </ScrollView>

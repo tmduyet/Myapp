@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="ten"
         android:textSize="25sp"
-        android:textColor="#2d2d2d"
+        android:textColor="#000"
         android:id="@+id/cuslistten"/>
     <TextView
 
@@ -26,20 +26,30 @@
         android:gravity="center"
         android:layout_below="@+id/cuslistten"
         android:layout_toRightOf="@+id/cuslisthinh"
-        android:layout_width="match_parent"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:text="Gia"
+        android:textSize="25sp"/>
+    <TextView
+        android:textColor="#FF0000"
+        android:id="@+id/dvt"
+        android:gravity="center"
+        android:layout_below="@+id/cuslistten"
+        android:layout_toRightOf="@+id/cuslistgia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="VND"
         android:textSize="25sp"/>
     <Button
         android:id="@+id/cuslistbot"
         android:layout_below="@+id/cuslistgia"
         android:layout_toRightOf="@+id/cuslisthinh"
-        android:layout_width="wrap_content"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:text="-"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
     <TextView
-        android:textColor="#2d2d2d"
+        android:textColor="#000"
         android:gravity="center"
         android:id="@+id/cuslistsoluong"
         android:layout_toRightOf="@+id/cuslistbot"
@@ -52,7 +62,7 @@
     <Button
         android:id="@+id/cuslistthem"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cuslistgia"
         android:layout_marginTop="0dp"

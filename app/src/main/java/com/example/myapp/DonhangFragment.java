@@ -197,7 +197,7 @@ public class DonhangFragment extends Fragment {
 
                     }
                 });
-                Button btnxoa = (Button)d.findViewById(R.id.button);
+                Button btnxoa = (Button)d.findViewById(R.id.button6);
                 btnxoa.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View view) {
