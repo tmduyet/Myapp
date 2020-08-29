@@ -52,7 +52,7 @@
         app:cardElevation="10dp"
         android:id="@+id/cardViewLogin"
         android:layout_marginBottom="30dp"
-        android:layout_above="@+id/cardViewGuest"
+        android:layout_above="@+id/textRegister"
         android:layout_centerHorizontal="true">
 
         <RelativeLayout
@@ -69,31 +69,6 @@
                 android:textSize="18sp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        app:cardBackgroundColor="@color/colorAccent"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="10dp"
-        android:id="@+id/cardViewGuest"
-        android:layout_marginBottom="50dp"
-        android:layout_above="@+id/textRegister"
-        android:layout_centerHorizontal="true">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="Guest"
-                android:textColor="#fff"
-                android:textSize="18sp" />
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
     <!--Quen Pass-->
     <TextView
         android:id="@+id/textForgetpass"
@@ -103,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="250dp"
-        android:layout_marginBottom="55dp"
+        android:layout_marginBottom="100dp"
         android:text="Forget Password?" />
     <!--Dang Ki-->
     <TextView
@@ -112,7 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="50dp"
-        android:layout_marginBottom="55dp"
+        android:layout_marginBottom="100dp"
         android:text="Register Here"
         android:textColor="#fff"
         android:textSize="18dp"

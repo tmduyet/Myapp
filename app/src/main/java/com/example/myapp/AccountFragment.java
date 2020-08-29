@@ -94,8 +94,6 @@ public class AccountFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -108,10 +106,8 @@ public class AccountFragment extends Fragment {
         storageReference = FirebaseStorage.getInstance().getReference();
         userId = fAuth.getCurrentUser().getUid();
         user = fAuth.getCurrentUser();
-
         final FirebaseUser currentFirebaseUser = fAuth.getCurrentUser();
         currentFirebaseUser.getUid();
-
         StorageReference profileRef = storageReference.child("users/" + fAuth.getCurrentUser().getUid() + "/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -119,30 +115,24 @@ public class AccountFragment extends Fragment {
                 Picasso.get().load(uri).into(profileImage);
             }
         });
-
         final DocumentReference documentReference = fStore.collection("users").document(userId);
         documentReference.addSnapshotListener((documentSnapshot, e) -> {
             if(documentSnapshot.exists()){
                 phone.setText(documentSnapshot.getString("phone"));
                 fullName.setText(documentSnapshot.getString("fName"));
                 email.setText(documentSnapshot.getString("email"));
-
             }else {
                 Log.d("tag", "onEvent: Document do not exists");
             }
         });
-
         resetPassLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 final EditText resetPassword = new EditText(v.getContext());
-
                 final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
                 passwordResetDialog.setTitle("Reset Password ?");
                 passwordResetDialog.setMessage("Enter New Password > 6 Characters long.");
                 passwordResetDialog.setView(resetPassword);
-
                 passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -161,19 +151,15 @@ public class AccountFragment extends Fragment {
                         });
                     }
                 });
-
                 passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // close
                     }
                 });
-
                 passwordResetDialog.create().show();
-
             }
         });
-
         changeProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,13 +180,7 @@ public class AccountFragment extends Fragment {
             }
         });
         return v;
-
     }
-
-    public void logout(View view){
-
-    }
-
     void init(View view)
     {
         phone = (TextView)view.findViewById(R.id.profilePhone);
@@ -213,5 +193,4 @@ public class AccountFragment extends Fragment {
         verifyMsg = (TextView)view.findViewById(R.id.verifyMsg);
         logout = (Button)view.findViewById(R.id.buttonLogout);
     }
-
 }

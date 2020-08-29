@@ -40,7 +40,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     private AppBarConfiguration mAppBarConfiguration;
     private TabLayout tabLayout;
@@ -114,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, nav_header, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         nav_header.addDrawerListener(toggle);
@@ -145,19 +144,6 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             super.onBackPressed();
-        }
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.vhvn:
-                Intent intent = new Intent(MainActivity.this, TheLoaiActivity.class);
-                intent.putExtra("Theloai", "Văn học Việt Nam");
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 }

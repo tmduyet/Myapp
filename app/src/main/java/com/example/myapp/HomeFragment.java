@@ -96,7 +96,6 @@ public class HomeFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -141,27 +140,6 @@ public class HomeFragment extends Fragment{
 
             }
         });
-        /*if(fdata != null){
-            fdata.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.exists()){
-                        arrayList = new ArrayList<>();
-                        for(DataSnapshot ds : snapshot.getChildren()){
-                            arrayList.add(ds.getValue(Sach.class));
-                        }
-                        ShopAdapter adaptershop = new ShopAdapter(arrayList, getActivity().getApplicationContext());
-                        recyclerView.setAdapter(adaptershop);
-                        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(getActivity().getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        }*/
         if(searchView != null){
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
@@ -176,30 +154,12 @@ public class HomeFragment extends Fragment{
                 }
             });
         }
-//        fdata.child("Sach").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot dataSnapshot :snapshot.getChildren())
-//                {
-//
-//                    Sach p = dataSnapshot.getValue(Sach.class);
-//                    arrayList.add(p);
-//                }
-//                shopAdapter = new ShopAdapter(arrayList,getContext());
-//                recyclerView.setAdapter(shopAdapter);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });*/
         return view;
     }
     private void search(String s){
         ArrayList<Sach> listsach = new ArrayList<>();
         for(Sach obj : arrayList){
-            if(obj.getTensach().toLowerCase().contains(s.toLowerCase())){
+            if(obj.getTensach().toLowerCase().contains(s.toLowerCase()) || obj.getTheloai().toLowerCase().contains(s.toLowerCase())){
                 listsach.add(obj);
             }
         }

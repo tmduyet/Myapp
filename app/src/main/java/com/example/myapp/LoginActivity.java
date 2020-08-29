@@ -26,8 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
-    ProgressBar progressBar;
-    EditText mUser, mPass, mEmail;
+    EditText mPass, mEmail;
     TextView forgotTextLink;
     long backPressTime;
     Toast backToast;
@@ -35,22 +34,22 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        TextView textRegister, textForgetpass;
-        CardView cardViewGuest;
+        TextView textRegister;
         mAuth = FirebaseAuth.getInstance();
-        mUser = findViewById(R.id.editTextUserEmail);
+        mEmail = findViewById(R.id.editTextUserEmail);
         mPass = findViewById(R.id.editTextPassword);
         forgotTextLink = findViewById(R.id.textForgetpass);
         final FirebaseUser currentFirebaseUser = mAuth.getCurrentUser();
-        //FirebaseAuth.getInstance().signOut();
         CardView cardViewLogin = (CardView)findViewById(R.id.cardViewLogin);
+        mEmail.setText("");
+        mPass.setText("");
         cardViewLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String user = mUser.getText().toString().trim();
+                String user = mEmail.getText().toString().trim();
                 String pass = mPass.getText().toString().trim();
                 if(TextUtils.isEmpty(user)){
-                    mUser.setError("Email is required!");
+                    mEmail.setError("Email is required!");
                     return;
                 }
                 if(TextUtils.isEmpty(pass)){
@@ -61,7 +60,6 @@ public class LoginActivity extends AppCompatActivity {
                     mPass.setError("Password must be >= 6 characters!");
                     return;
                 }
-                //progressBar.setVisibility(View.VISIBLE);
                 mAuth.signInWithEmailAndPassword(user, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -69,14 +67,19 @@ public class LoginActivity extends AppCompatActivity {
                             if (currentFirebaseUser.getEmail().equals("admin@admin.com")) {
                                 Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getApplicationContext(), AdminActivity.class));
+                                mEmail.setText("");
+                                mPass.setText("");
                             } else {
                                 Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                mEmail.setText("");
+                                mPass.setText("");
                             }
                         }
                         else{
                             Toast.makeText(LoginActivity.this, "Can't Login!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            //progressBar.setVisibility(View.GONE);
+                            mEmail.setText("");
+                            mPass.setText("");
                         }
                     }
                 });
@@ -131,15 +134,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 passwordResetDialog.create().show();
 
-            }
-        });
-
-        cardViewGuest = (CardView)findViewById(R.id.cardViewGuest);
-        cardViewGuest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
             }
         });
     }
